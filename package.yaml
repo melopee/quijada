@@ -5,6 +5,7 @@ dependencies:
   - containers
   - mtl
   - text
+  - aeson
 
 library:
   source-dirs: src/
