@@ -1,5 +1,5 @@
-src="data/$1"
-trg="src/Quijada/Values.hs"
+src="./data/$1"
+trg="./src/Quijada/Values.hs"
 if [ -e "$src" ]; then
     if ! [ -e "$trg" ]; then
     cp "$src" "$trg" &&
@@ -9,8 +9,10 @@ if [ -e "$src" ]; then
 
 module Quijada.Values where
 
-data Values = forall v. (Show v) => KV String v
-instance Show Values where
+import Data.Typeable
+
+data Val = forall v. (Show v, Typeable v) => KV String v
+instance Show Val where
     show (KV k v) = \"(\" ++ show k ++ \": \" ++ show v ++ \")\"
 
 values = " if $. == 1' "$trg";
@@ -29,5 +31,8 @@ values = " if $. == 1' "$trg";
         echo "$trg already exists, aborting"
     fi
 else
-    echo "$1 does not exist, aborting"
+    echo "$src does not exist, aborting"
 fi
+
+# cancel:
+# rm src/Quijada/Values.hs

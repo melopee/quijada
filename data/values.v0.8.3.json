@@ -1,7 +1,6 @@
 {
-  "Cd": [
-    {
-      "INC": "∅",
+  "Cd": {
+    "INC: ∅": {
       "MAIN": {
         "INF-PRC": "’",
         "INF-CPT": "h",
@@ -9,8 +8,7 @@
         "FML-CPT": "y"
       }
     },
-    {
-      "INC": "INF-PRC",
+    "INC: INF-PRC": {
       "MAIN": {
         "INF-PRC": "hl",
         "INF-CPT": "hr",
@@ -18,8 +16,7 @@
         "FML-CPT": "hy"
       }
     },
-    {
-      "INC": "FML-PRC",
+    "INC: FML-PRC": {
       "MAIN": {
         "INF-PRC": "hll",
         "INF-CPT": "hrr",
@@ -27,8 +24,7 @@
         "FML-CPT": "hn"
       }
     },
-    {
-      "INC": "INF-CPT",
+    "INC: INF-CPT": {
       "MAIN": {
         "INF-PRC": "hlw",
         "INF-CPT": "hrw",
@@ -36,8 +32,7 @@
         "FML-CPT": "hmy"
       }
     },
-    {
-      "INC": "FML-CPT",
+    "INC: FML-CPT": {
       "MAIN": {
         "INF-PRC": "hly",
         "INF-CPT": "hrr",
@@ -45,9 +40,9 @@
         "FML-CPT": "hny"
       }
     }
-  ],
-  "Vr": [
-    {
+  },
+  "Vr": {
+    "STEM 0": {
       "STA": {
         "BSC": "aì",
         "CTE": "eì",
@@ -63,7 +58,7 @@
         "INT": "öù"
       }
     },
-    {
+    "STEM 1": {
       "STA": {
         "BSC": "a",
         "CTE": "e",
@@ -79,7 +74,7 @@
         "INT": "ëi"
       }
     },
-    {
+    "STEM 2": {
       "STA": {
         "BSC": "ä",
         "CTE": "ë",
@@ -95,7 +90,7 @@
         "INT": "ëu"
       }
     },
-    {
+    "STEM 3": {
       "STA": {
         "BSC": "ao",
         "CTE": "eo",
@@ -111,7 +106,7 @@
         "INT": "ië/uë"
       }
     }
-  ],
+  },
   "Vx": {
     "TYPE 1": {
       "0": "ae",

@@ -5,14 +5,13 @@ module Quijada.Values where
 
 import Data.Typeable
 
-data Values = forall v. (Show v, Typeable v) => KV String v
-instance Show Values where
+data Val = forall v. (Show v, Typeable v) => KV String v
+instance Show Val where
     show (KV k v) = "(" ++ show k ++ ": " ++ show v ++ ")"
 
 values = [
   KV "Cd" [
-    [
-      KV "INC" "∅",
+    KV "INC: ∅" [
       KV "MAIN" [
         KV "INF-PRC" "’",
         KV "INF-CPT" "h",
@@ -20,8 +19,7 @@ values = [
         KV "FML-CPT" "y"
       ]
     ],
-    [
-      KV "INC" "INF-PRC",
+    KV "INC: INF-PRC" [
       KV "MAIN" [
         KV "INF-PRC" "hl",
         KV "INF-CPT" "hr",
@@ -29,8 +27,7 @@ values = [
         KV "FML-CPT" "hy"
       ]
     ],
-    [
-      KV "INC" "FML-PRC",
+    KV "INC: FML-PRC" [
       KV "MAIN" [
         KV "INF-PRC" "hll",
         KV "INF-CPT" "hrr",
@@ -38,8 +35,7 @@ values = [
         KV "FML-CPT" "hn"
       ]
     ],
-    [
-      KV "INC" "INF-CPT",
+    KV "INC: INF-CPT" [
       KV "MAIN" [
         KV "INF-PRC" "hlw",
         KV "INF-CPT" "hrw",
@@ -47,8 +43,7 @@ values = [
         KV "FML-CPT" "hmy"
       ]
     ],
-    [
-      KV "INC" "FML-CPT",
+    KV "INC: FML-CPT" [
       KV "MAIN" [
         KV "INF-PRC" "hly",
         KV "INF-CPT" "hrr",
@@ -58,7 +53,7 @@ values = [
     ]
   ],
   KV "Vr" [
-    [
+    KV "STEM 0" [
       KV "STA" [
         KV "BSC" "aì",
         KV "CTE" "eì",
@@ -74,7 +69,7 @@ values = [
         KV "INT" "öù"
       ]
     ],
-    [
+    KV "STEM 1" [
       KV "STA" [
         KV "BSC" "a",
         KV "CTE" "e",
@@ -90,7 +85,7 @@ values = [
         KV "INT" "ëi"
       ]
     ],
-    [
+    KV "STEM 2" [
       KV "STA" [
         KV "BSC" "ä",
         KV "CTE" "ë",
@@ -106,7 +101,7 @@ values = [
         KV "INT" "ëu"
       ]
     ],
-    [
+    KV "STEM 3" [
       KV "STA" [
         KV "BSC" "ao",
         KV "CTE" "eo",
