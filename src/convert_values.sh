@@ -4,16 +4,9 @@ if [ -e "$src" ]; then
     if ! [ -e "$trg" ]; then
     cp "$src" "$trg" &&
     perl -i -p -e 'y/{}/[]/;s/"(.*)": \[/KV "$1" \[/g;s/"(.*)": "(.*)"/KV "$1" "$2"/g;' "$trg" &&
-    perl -i -p -e 'print "
-{-# LANGUAGE ExistentialQuantification #-}
+    perl -i -p -e 'print "module Quijada.Values where
 
-module Quijada.Values where
-
-import Data.Typeable
-
-data Val = forall v. (Show v, Typeable v) => KV String v
-instance Show Val where
-    show (KV k v) = \"(\" ++ show k ++ \": \" ++ show v ++ \")\"
+import Quijada.ProcVal
 
 values = " if $. == 1' "$trg";
     # perl -i -p -e 's/KL "Cd"/KLL "Cd"/g' "$trg" &&

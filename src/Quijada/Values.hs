@@ -4,7 +4,7 @@ import Quijada.ProcVal
 
 values = [
   KV "Cd" [
-    KV "INC: ∅" [
+    KV "INC:∅" [
       KV "MAIN" [
         KV "INF-PRC" "’",
         KV "INF-CPT" "h",
@@ -12,7 +12,7 @@ values = [
         KV "FML-CPT" "y"
       ]
     ],
-    KV "INC: INF-PRC" [
+    KV "INC:INF-PRC" [
       KV "MAIN" [
         KV "INF-PRC" "hl",
         KV "INF-CPT" "hr",
@@ -20,7 +20,7 @@ values = [
         KV "FML-CPT" "hy"
       ]
     ],
-    KV "INC: FML-PRC" [
+    KV "INC:FML-PRC" [
       KV "MAIN" [
         KV "INF-PRC" "hll",
         KV "INF-CPT" "hrr",
@@ -28,7 +28,7 @@ values = [
         KV "FML-CPT" "hn"
       ]
     ],
-    KV "INC: INF-CPT" [
+    KV "INC:INF-CPT" [
       KV "MAIN" [
         KV "INF-PRC" "hlw",
         KV "INF-CPT" "hrw",

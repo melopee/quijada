@@ -1,6 +1,6 @@
 {
   "Cd": {
-    "INC: ∅": {
+    "INC:∅": {
       "MAIN": {
         "INF-PRC": "’",
         "INF-CPT": "h",
@@ -8,7 +8,7 @@
         "FML-CPT": "y"
       }
     },
-    "INC: INF-PRC": {
+    "INC:INF-PRC": {
       "MAIN": {
         "INF-PRC": "hl",
         "INF-CPT": "hr",
@@ -16,7 +16,7 @@
         "FML-CPT": "hy"
       }
     },
-    "INC: FML-PRC": {
+    "INC:FML-PRC": {
       "MAIN": {
         "INF-PRC": "hll",
         "INF-CPT": "hrr",
@@ -24,7 +24,7 @@
         "FML-CPT": "hn"
       }
     },
-    "INC: INF-CPT": {
+    "INC:INF-CPT": {
       "MAIN": {
         "INF-PRC": "hlw",
         "INF-CPT": "hrw",
