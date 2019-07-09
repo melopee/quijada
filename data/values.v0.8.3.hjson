@@ -1,6 +1,6 @@
 {
     Cd: {
-        "INC: ∅": {
+        "INC:∅": {
             MAIN: {
                 INF-PRC: ’
                 INF-CPT: h
@@ -8,7 +8,7 @@
                 FML-CPT: y
             }
         }
-        "INC: INF-PRC": {
+        "INC:INF-PRC": {
             MAIN: {
                 INF-PRC: hl
                 INF-CPT: hr
@@ -16,7 +16,7 @@
                 FML-CPT: hy
             }
         }
-        "INC: FML-PRC": {
+        "INC:FML-PRC": {
             MAIN: {
                 INF-PRC: hll
                 INF-CPT: hrr
@@ -24,7 +24,7 @@
                 FML-CPT: hn
             }
         }
-        "INC: INF-CPT": {
+        "INC:INF-CPT": {
             MAIN: {
                 INF-PRC: hlw
                 INF-CPT: hrw
@@ -32,7 +32,7 @@
                 FML-CPT: hmy
             }
         }
-        "INC: FML-CPT": {
+        "INC:FML-CPT": {
             MAIN: {
                 INF-PRC: hly
                 INF-CPT: hrr
@@ -43,7 +43,7 @@
     }
 
     Vr: {
-        "STEM 0": {
+        "STEM:0": {
             STA: {
                 BSC: aì
                 CTE: eì
@@ -59,7 +59,7 @@
                 INT: öù
             }
         }
-        "STEM 1": {
+        "STEM:1": {
             STA: {
                 BSC: a
                 CTE: e
@@ -75,7 +75,7 @@
                 INT: ëi
             }
         }
-        "STEM 2": {
+        "STEM:2": {
             STA: {
                 BSC: ä
                 CTE: ë
@@ -91,7 +91,7 @@
                 INT: ëu
             }
         }
-        "STEM 3": {
+        "STEM:3": {
             STA: {
                 BSC: ao
                 CTE: eo
@@ -110,7 +110,7 @@
     }
 
     Vx: {
-        "TYPE 1": {
+        "TYPE:1": {
             0: ae
             1: a
             2: e
@@ -122,7 +122,7 @@
             8: ë
             9: ä
         }
-        "TYPE 2": {
+        "TYPE:2": {
             0: ëu
             1: ai
             2: ei
@@ -134,7 +134,7 @@
             8: eu
             9: au
         }
-        "TYPE 3": {
+        "TYPE:3": {
             0: uë/ëù
             1: ia/aì
             2: ie/eì
@@ -146,7 +146,7 @@
             8: ue/eù
             9: ua/aù
         }
-        "Ca STACKING": {
+        "Ca:STACKING": {
             MAIN: uä
             INC: uë
         }

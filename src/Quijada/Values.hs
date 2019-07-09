@@ -1,13 +1,6 @@
-
-{-# LANGUAGE ExistentialQuantification #-}
-
 module Quijada.Values where
 
-import Data.Typeable
-
-data Val = forall v. (Show v, Typeable v) => KV String v
-instance Show Val where
-    show (KV k v) = "(" ++ show k ++ ": " ++ show v ++ ")"
+import Quijada.ProcVal
 
 values = [
   KV "Cd" [
@@ -43,7 +36,7 @@ values = [
         KV "FML-CPT" "hmy"
       ]
     ],
-    KV "INC: FML-CPT" [
+    KV "INC:FML-CPT" [
       KV "MAIN" [
         KV "INF-PRC" "hly",
         KV "INF-CPT" "hrr",
@@ -53,7 +46,7 @@ values = [
     ]
   ],
   KV "Vr" [
-    KV "STEM 0" [
+    KV "STEM:0" [
       KV "STA" [
         KV "BSC" "aì",
         KV "CTE" "eì",
@@ -69,7 +62,7 @@ values = [
         KV "INT" "öù"
       ]
     ],
-    KV "STEM 1" [
+    KV "STEM:1" [
       KV "STA" [
         KV "BSC" "a",
         KV "CTE" "e",
@@ -85,7 +78,7 @@ values = [
         KV "INT" "ëi"
       ]
     ],
-    KV "STEM 2" [
+    KV "STEM:2" [
       KV "STA" [
         KV "BSC" "ä",
         KV "CTE" "ë",
@@ -101,7 +94,7 @@ values = [
         KV "INT" "ëu"
       ]
     ],
-    KV "STEM 3" [
+    KV "STEM:3" [
       KV "STA" [
         KV "BSC" "ao",
         KV "CTE" "eo",
@@ -119,7 +112,7 @@ values = [
     ]
   ],
   KV "Vx" [
-    KV "TYPE 1" [
+    KV "TYPE:1" [
       KV "0" "ae",
       KV "1" "a",
       KV "2" "e",
@@ -131,7 +124,7 @@ values = [
       KV "8" "ë",
       KV "9" "ä"
     ],
-    KV "TYPE 2" [
+    KV "TYPE:2" [
       KV "0" "ëu",
       KV "1" "ai",
       KV "2" "ei",
@@ -143,7 +136,7 @@ values = [
       KV "8" "eu",
       KV "9" "au"
     ],
-    KV "TYPE 3" [
+    KV "TYPE:3" [
       KV "0" "uë/ëù",
       KV "1" "ia/aì",
       KV "2" "ie/eì",
@@ -155,7 +148,7 @@ values = [
       KV "8" "ue/eù",
       KV "9" "ua/aù"
     ],
-    KV "Ca STACKING" [
+    KV "Ca:STACKING" [
       KV "MAIN" "uä",
       KV "INC" "uë"
     ]
