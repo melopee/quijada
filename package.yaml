@@ -5,12 +5,16 @@ dependencies:
   - containers
   - mtl
   - text
-  - aeson
+  - parsec
 
-library:
+# library:
+#   source-dirs: src/
+#   exposed-modules:
+#   - Quijada.Phonology
+
+executable:
+  main: Quijada/Main.hs
   source-dirs: src/
-  exposed-modules:
-  - Quijada.Phonology
 
 ghc-options:
   - -O2

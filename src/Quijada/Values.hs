@@ -2,6 +2,7 @@ module Quijada.Values where
 
 import Quijada.ProcVal
 
+values :: [Val]
 values = [
   KV "Cd" [
     KV "INC:∅" [

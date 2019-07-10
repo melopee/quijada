@@ -3,7 +3,7 @@ trg="./src/Quijada/Values.hs"
 if [ -e "$src" ]; then
     if ! [ -e "$trg" ]; then
     cp "$src" "$trg" &&
-    perl -i -p -e 'y/{}/[]/;s/"(.*)": \[/KV "$1" \[/g;s/"(.*)": "(.*)"/KV "$1" "$2"/g;' "$trg" &&
+    perl -i -p -e 'y/{}/[]/;s/"(.*)": \[/L "$1" \[/g;s/"(.*)": "(.*)"/P "$1" "$2"/g;' "$trg" &&
     perl -i -p -e 'print "module Quijada.Values where
 
 import Quijada.ProcVal
