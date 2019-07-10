@@ -1,6 +1,7 @@
 module Quijada.Grammar where
 
-import Quijada.Combinators
+import Quijada.Utils
+import Quijada.Values
 import Text.Parsec
 import Text.Parsec.String
 
@@ -233,4 +234,6 @@ complexFormative = simpleFormative
 
 root = simpleFormative <|> complexFormative
 
-rr = run root
+rr s = case run root s of
+    Left e -> show e
+    Right i -> show i

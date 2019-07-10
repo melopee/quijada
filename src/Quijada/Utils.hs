@@ -1,17 +1,15 @@
 {-# LANGUAGE FlexibleContexts #-}
 {-# LANGUAGE NoMonomorphismRestriction #-}
 
-module Quijada.Combinators where
+module Quijada.Utils where
 
-import Quijada.ProcVal
 import Quijada.Values
 
 import Text.Parsec
 import Text.Parsec.String
-import Data.Maybe
 
-
--- ## AST type and utility functions
+-- ## utility functions for the AST type, Tree
+-- Tree is defined in Values.hs because this file depends on it, and Utils.hs depends on Values.hs
 
 -- "wí’yei’yo haicëmxi’lukš" should be represented as:
 -- L "sentence" [
@@ -34,9 +32,6 @@ import Data.Maybe
 --         P "Cs" "kš"
 --     ]
 -- ]
-
-
-data Tree = N String | P String String | L String [Tree] deriving (Eq,Show)
 
 -- instance Show Tree where
 --     show (N s) = show s
@@ -70,6 +65,29 @@ infixl 2 <>
 
 
 
+-- ## some functions to perform lookup on Tree, as Tree is also used for serializing the scraped morpho-phonological values
+
+kvLookup1 :: String -> [Tree] -> [Tree]
+kvLookup1 _ [] = []
+kvLookup1 needle ((N hay):stack) = kvLookup1 needle stack
+kvLookup1 needle (hay@(P k v):stack) = if needle == k then hay:(kvLookup1 needle stack) else kvLookup1 needle stack
+kvLookup1 needle (hay@(L k v):stack) = if needle == k then hay:(kvLookup1 needle stack) else kvLookup1 needle stack
+
+vLeaves :: Tree -> [String]
+vLeaves (N s) = [s]
+vLeaves (P k v) = [v]
+vLeaves (L k v) = concat . map (vLeaves) $ v
+
+kvLeaves :: Tree -> [(String,String)]
+kvLeaves (N s) = [([], s)]
+kvLeaves (P k v) = [(k, v)]
+kvLeaves (L k v) = concat . map kvLeaves $ v
+
+kvLeavesPath :: Tree -> [([String],String)]
+kvLeavesPath (N s) = [([], s)]
+kvLeavesPath (P k v) = [([k], v)]
+kvLeavesPath (L k v) = appendKeysAsPath k . concat . map kvLeavesPath $ v where
+    appendKeysAsPath k = map (\(x,y) -> (k:x, y))
 
 
 -- ## functions generating parsers based on morpho-phonological values
@@ -77,7 +95,7 @@ infixl 2 <>
 valueFrom _ [] = parserZero
 valueFrom v (x:xs) = try (P v <$> string x) <|> (valueFrom v xs)
 
-fromVal v = valueFrom v (vLeaves . fromJust . kvLookup1 v $ values)
+fromVal v = valueFrom v (vLeaves . head . kvLookup1 v $ values)
 
 
 

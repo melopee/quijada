@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 9a225873d17632efb0a5d7dbe0dbb9ab88bffcaa2bce6fb82c54cb1ebee8d1c2
+-- hash: 19c345d4908e4fc0c9717de3f48acee6fd4c8859d50b6eac976318a948966cdf
 
 name:           quijada
 version:        0.0.0
@@ -13,10 +13,9 @@ build-type:     Simple
 executable quijada
   main-is: Quijada/Main.hs
   other-modules:
-      Quijada.Combinators
       Quijada.Grammar
       Quijada.Phonology
-      Quijada.ProcVal
+      Quijada.Utils
       Quijada.Values
       Paths_quijada
   hs-source-dirs:

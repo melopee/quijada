@@ -2,6 +2,6 @@ module Main where
 
 import Quijada.Grammar
 import System.Environment
-import Quijada.Combinators
+import Quijada.Utils
 
-main = getArgs <⋅> (head ⁓ rr) >>= print
+main = getArgs <⋅> (head ⁓ rr) >>= putStrLn

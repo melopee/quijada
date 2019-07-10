@@ -1,12 +1,13 @@
-src="./data/$1"
+src="./data/values.v0.8.3.json"
 trg="./src/Quijada/Values.hs"
+rm "$trg"
 if [ -e "$src" ]; then
     if ! [ -e "$trg" ]; then
     cp "$src" "$trg" &&
     perl -i -p -e 'y/{}/[]/;s/"(.*)": \[/L "$1" \[/g;s/"(.*)": "(.*)"/P "$1" "$2"/g;' "$trg" &&
     perl -i -p -e 'print "module Quijada.Values where
 
-import Quijada.ProcVal
+data Tree = N String | P String String | L String [Tree] deriving (Show, Eq)
 
 values = " if $. == 1' "$trg";
     # perl -i -p -e 's/KL "Cd"/KLL "Cd"/g' "$trg" &&
