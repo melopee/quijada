@@ -5,222 +5,226 @@ import Quijada.Values
 import Text.Parsec
 import Text.Parsec.String
 
+import Melib hiding (show)
+
 -- TODO:
 -- build script for convert_value.sh
 -- rewrite ValProc.hs
 -- generate those with Phonology.hs
 -- merge Phonology.hs, the .hjson data and ValProc.hs in a coherent scheme
 
-p :: Parser Tree
+p :: ParserTree
 p = string "p" <⋅> N
 
-b :: Parser Tree
+b :: ParserTree
 b = string "b" <⋅> N
 
-t :: Parser Tree
+t :: ParserTree
 t = string "t" <⋅> N
 
-d :: Parser Tree
+d :: ParserTree
 d = string "d" <⋅> N
 
-k :: Parser Tree
+k :: ParserTree
 k = string "k" <⋅> N
 
-g :: Parser Tree
+g :: ParserTree
 g = string "g" <⋅> N
 
-glottal :: Parser Tree
+glottal :: ParserTree
 glottal = string "’" <⋅> N
 
-f :: Parser Tree
+f :: ParserTree
 f = string "f" <⋅> N
 
-v :: Parser Tree
+v :: ParserTree
 v = string "v" <⋅> N
 
-ţ :: Parser Tree
+ţ :: ParserTree
 ţ = string "ţ" <⋅> N
 
-ḑ :: Parser Tree
+ḑ :: ParserTree
 ḑ = string "ḑ" <⋅> N
 
-s :: Parser Tree
+s :: ParserTree
 s = string "s" <⋅> N
 
-z :: Parser Tree
+z :: ParserTree
 z = string "z" <⋅> N
 
-š :: Parser Tree
+š :: ParserTree
 š = string "š" <⋅> N
 
-ž :: Parser Tree
+ž :: ParserTree
 ž = string "ž" <⋅> N
 
-x :: Parser Tree
+x :: ParserTree
 x = string "x" <⋅> N
 
-h :: Parser Tree
+h :: ParserTree
 h = string "h" <⋅> N
 
-ļ :: Parser Tree
+ļ :: ParserTree
 ļ = string "ļ" <⋅> N
 
-c :: Parser Tree
+c :: ParserTree
 c = string "c" <⋅> N
 
-ż :: Parser Tree
+ż :: ParserTree
 ż = string "ż" <⋅> N
 
-č :: Parser Tree
+č :: ParserTree
 č = string "č" <⋅> N
 
-j :: Parser Tree
+j :: ParserTree
 j = string "j" <⋅> N
 
-m :: Parser Tree
+m :: ParserTree
 m = string "m" <⋅> N
 
-n :: Parser Tree
+n :: ParserTree
 n = string "n" <⋅> N
 
-ň :: Parser Tree
+ň :: ParserTree
 ň = string "ň" <⋅> N
 
-r :: Parser Tree
+r :: ParserTree
 r = string "r" <⋅> N
 
-l :: Parser Tree
+l :: ParserTree
 l = string "l" <⋅> N
 
-w :: Parser Tree
+w :: ParserTree
 w = string "w" <⋅> N
 
-y :: Parser Tree
+y :: ParserTree
 y = string "y" <⋅> N
 
-ř :: Parser Tree
+ř :: ParserTree
 ř = string "ř" <⋅> N
 
-a :: Parser Tree
+a :: ParserTree
 a = string "a" <⋅> N
 
-e :: Parser Tree
+e :: ParserTree
 e = string "e" <⋅> N
 
-o :: Parser Tree
+o :: ParserTree
 o = string "o" <⋅> N
 
-u :: Parser Tree
+u :: ParserTree
 u = string "u" <⋅> N
 
-i :: Parser Tree
+i :: ParserTree
 i = string "i" <⋅> N
 
-ä :: Parser Tree
+ä :: ParserTree
 ä = string "ä" <⋅> N
 
-ë :: Parser Tree
+ë :: ParserTree
 ë = string "ë" <⋅> N
 
-ö :: Parser Tree
+ö :: ParserTree
 ö = string "ö" <⋅> N
 
-ü :: Parser Tree
+ü :: ParserTree
 ü = string "ü" <⋅> N
 
-consonant :: Parser Tree
+consonant :: ParserTree
 consonant = p <|> b <|> t <|> d <|> k <|> g <|> glottal <|> f <|> v <|> ţ <|> ḑ <|> s <|> z <|> š <|> ž <|> x <|> h <|> ļ <|> c <|> ż <|> č <|> j <|> m <|> n <|> ň <|> r <|> l <|> w <|> y <|> ř
 
-vowel :: Parser Tree
+vowel :: ParserTree
 vowel = a <|> e <|> o <|> u <|> i <|> ä <|> ë <|> ö <|> ü
 
-wy :: Parser Tree
+wy :: ParserTree
 wy = w <|> y
 
-glottal_wy :: Parser Tree
+glottal_wy :: ParserTree
 glottal_wy = (glottal <> w) <|> (glottal <> y)
 
-monoconsonantal :: Parser Tree
+monoconsonantal :: ParserTree
 monoconsonantal = no ļ *> no glottal *> no h *> no y *> no w *> consonant
 
-polyconsonantal :: Parser Tree
+polyconsonantal :: ParserTree
 polyconsonantal = consonant <> (concaTrees <$> many1 consonant)
 
-initial_cr :: Parser Tree
-initial_cr = monoconsonantal <|> polyconsonantal
+initial_cr :: ParserTree
+initial_cr = monoconsonantal <|> polyconsonantal -- <⋅> (concaTree (zeroP "Cr"))
 
-mid_cr :: Parser Tree
-mid_cr = (concaTrees <$> many1 consonant)
+mid_cr :: ParserTree
+mid_cr = (concaTrees <$> many1 consonant) -- <⋅> (concaTree (zeroP "Cr"))
 
-vr :: Parser Tree
-vr = fromVal "Vr"
+vr_stateless :: ParserTree
+vr_stateless = fromVal "Vr"
 
-cd :: Parser Tree
+vr :: ParserTree
+vr = do
+    x <- vr_stateless
+    modifyState (x:)
+    return x
+
+cd :: ParserTree
 cd = fromVal "Cd"
 
-ca :: Parser Tree
+ca :: ParserTree
 ca = fromVal "Ca"
 
-vx :: Parser Tree
+vx :: ParserTree
 vx = fromVal "Vx"
 
-cs :: Parser Tree
+cs :: ParserTree
 cs = mid_cr <⋅> (concaTree (zeroP "Cs"))
 
-vn :: Parser Tree
+vn :: ParserTree
 vn = fromVal "Vn"
 
-vm1 :: Parser Tree
+vm1 :: ParserTree
 vm1 = fromVal "Vm1"
 
-vt1 :: Parser Tree
+vt1 :: ParserTree
 vt1 = fromVal "Vt1"
 
-vp :: Parser Tree
+vp :: ParserTree
 vp = fromVal "Vp"
 
-vl :: Parser Tree
+vl :: ParserTree
 vl = fromVal "Vl"
 
-ve :: Parser Tree
+ve :: ParserTree
 ve = fromVal "Ve"
 
-vm2 :: Parser Tree
+vm2 :: ParserTree
 vm2 = fromVal "Vm2"
 
-vt2 :: Parser Tree
+vt2 :: ParserTree
 vt2 = fromVal "Vt2"
 
-cc :: Parser Tree
+cc :: ParserTree
 cc = fromVal "Cc"
 
-cm :: Parser Tree
+cm :: ParserTree
 cm = fromVal "Cm"
 
-vc :: Parser Tree
+vc :: ParserTree
 vc = fromVal "Vc"
 
-vk :: Parser Tree
+vk :: ParserTree
 vk = fromVal "Vk"
 
-cb :: Parser Tree
+cb :: ParserTree
 cb = glottal <> initial_cr <⋅> (concaTree (zeroP "Cs"))
 
-vstar :: Parser Tree
-vstar = try vr <|> try (glottal <> vr) <|> try (wy <> vr) <|> (glottal_wy <> vr)
-
-
--- vrstate :: Parsec String [(String,String)] Tree
--- vrstate = do
---     x <- fromVal "Vr"
-
-
--- vstate :: Parsec String [(String,String)] Tree
-
+vstar :: ParserTree
+vstar = do
+    x <- try vr_stateless -- <|> try (glottal <> vr_stateless) <|> try (wy <> vr_stateless) <|> (glottal_wy <> vr_stateless)
+    state <- getState
+    case kvLookup1 "Vr" state of
+        [] -> unexpected "error: expected a V* slot, must appear after a Vr slot"
+        (res:_) -> if res == x then return x
+            else unexpected "error: V* does not match Vr2."
 
 -- | parse slots VII to XIV
-formativeTail =
-    ca 
+formativeTail = ca 
     <> ({-many-} (vx <> cs))
     <> ((vn <|> vm1 <|> vt1) <> (vp <|> vl <|> ve <|> vm2 <|> vt2) <> (cc <|> cm)) <> (vc <|> vk) <> (cb ? zeroTree)
     <⋅> setk "formativeTail"

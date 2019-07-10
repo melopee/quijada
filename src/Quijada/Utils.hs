@@ -63,6 +63,7 @@ concaTrees = foldl (concaTree) zeroTree
 infixl 2 <>
 (<>) = \x y -> concaTree <$> x <*> y
 
+type ParserTree = Parsec String [Tree] Tree
 
 
 -- ## some functions to perform lookup on Tree, as Tree is also used for serializing the scraped morpho-phonological values
@@ -114,4 +115,6 @@ infixl 2 ?
 
 no = notFollowedBy
 
-run parser = parse parser ""
+runS state parser = runParser parser state ""
+
+run = runS []
