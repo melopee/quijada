@@ -4,4 +4,4 @@ import Quijada.Grammar
 import System.Environment
 import Quijada.Utils
 
-main = getArgs <⋅> (head ⁓ rr) >>= putStrLn
+main = getArgs <⋅> (head ⁓ (rr root)) >>= putStrLn

@@ -4,7 +4,12 @@ rm "$trg"
 if [ -e "$src" ]; then
     if ! [ -e "$trg" ]; then
     cp "$src" "$trg" &&
-    perl -i -p -e 'y/{}/[]/;s/"(.*)": \[/L "$1" \[/g;s/"(.*)": "(.*)"/P "$1" "$2"/g;' "$trg" &&
+    perl -i -p \
+        -e 'y/{}/[]/;' \
+        -e 's/"(.*)": \[/L "$1" \[/g;' \
+        -e 's/"(.*)": "(.*)"/P "$1" "$2"/g;' \
+        -e 's/^(\s*)\"(.*)\"/$1N \"$2\"/g;' \
+        "$trg" &&
     perl -i -p -e 'print "module Quijada.Values where
 
 data Tree = N String | P String String | L String [Tree] deriving (Show, Eq)

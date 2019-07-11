@@ -99,11 +99,26 @@
         "INT": "ae"
       },
       "DYN": {
-        "BSC": "ia/ua",
-        "CTE": "ie/ue",
-        "CSV": "io/uo",
-        "OBJ": "iö/uö",
-        "INT": "ië/uë"
+        "BSC": [
+          "ia",
+          "ua"
+        ],
+        "CTE": [
+          "ie",
+          "ue"
+        ],
+        "CSV": [
+          "io",
+          "uo"
+        ],
+        "OBJ": [
+          "iö",
+          "uö"
+        ],
+        "INT": [
+          "ië",
+          "uë"
+        ]
       }
     }
   },
@@ -133,16 +148,46 @@
       "9": "au"
     },
     "TYPE:3": {
-      "0": "uë/ëù",
-      "1": "ia/aì",
-      "2": "ie/eì",
-      "3": "io/oì",
-      "4": "iö/öì",
-      "5": "ië/ëì",
-      "6": "uö/öù",
-      "7": "uo/où",
-      "8": "ue/eù",
-      "9": "ua/aù"
+      "0": [
+        "uë",
+        "ëù"
+      ],
+      "1": [
+        "ia",
+        "aì"
+      ],
+      "2": [
+        "ie",
+        "eì"
+      ],
+      "3": [
+        "io",
+        "oì"
+      ],
+      "4": [
+        "iö",
+        "öì"
+      ],
+      "5": [
+        "ië",
+        "ëì"
+      ],
+      "6": [
+        "uö",
+        "öù"
+      ],
+      "7": [
+        "uo",
+        "où"
+      ],
+      "8": [
+        "ue",
+        "eù"
+      ],
+      "9": [
+        "ua",
+        "aù"
+      ]
     },
     "Ca:STACKING": {
       "MAIN": "uä",
@@ -151,35 +196,74 @@
   },
   "Ca": {
     "AFFILIATION": {
-      "CSL": "∅/l",
-      "ASO": "tļ/l-",
+      "CSL": [
+        "∅",
+        "l"
+      ],
+      "ASO": [
+        "tļ",
+        "l-"
+      ],
       "VAR": "r",
       "COA": "ř"
     },
     "CONFIGURATION": {
       "UNI": "∅",
-      "DPX": "ň/nt",
-      "DCT": "f/v",
-      "AGG": "ţ/ḑ",
+      "DPX": [
+        "ň",
+        "nt"
+      ],
+      "DCT": [
+        "f",
+        "v"
+      ],
+      "AGG": [
+        "ţ",
+        "ḑ"
+      ],
       "SEG": "m",
-      "CPN": "n/nk",
-      "COH": "t/d",
-      "CST": "k/g",
-      "MLT": "p/b"
+      "CPN": [
+        "n",
+        "nk"
+      ],
+      "COH": [
+        "t",
+        "d"
+      ],
+      "CST": [
+        "k",
+        "g"
+      ],
+      "MLT": [
+        "p",
+        "b"
+      ]
     },
     "EXTENSION": {
       "DEL": "∅",
       "PRX": "s",
       "ICP": "z",
-      "ATV": "ţ/f",
+      "ATV": [
+        "ţ",
+        "f"
+      ],
       "GRA": "š",
       "DPL": "ž"
     },
     "PERSPECTIVE": {
       "M": "∅",
-      "P": "t/m",
-      "N": "k/m",
-      "A": "p/m"
+      "P": [
+        "t",
+        "m"
+      ],
+      "N": [
+        "k",
+        "m"
+      ],
+      "A": [
+        "p",
+        "m"
+      ]
     },
     "ESSENCE": {
       "NRM": "∅",
@@ -187,13 +271,25 @@
     },
     "CONTEXT": {
       "EXS": "∅",
-      "FNC": "l/ly",
-      "RPS": "r/ry",
-      "AMG": "w/řy"
+      "FNC": [
+        "l",
+        "ly"
+      ],
+      "RPS": [
+        "r",
+        "ry"
+      ],
+      "AMG": [
+        "w",
+        "řy"
+      ]
     }
   },
   "Vn": {
-    "MNO": "∅/A",
+    "MNO": [
+      "∅",
+      "A"
+    ],
     "PRL": "e",
     "CRO": "o",
     "RCP": "u",
@@ -265,7 +361,10 @@
     "HYP": "ö’"
   },
   "Vm2": {
-    "null": "∅/ë",
+    "null": [
+      "∅",
+      "ë"
+    ],
     "FAC": "a",
     "SUB": "e",
     "ASM": "i",
@@ -360,7 +459,10 @@
   },
   "Cc": {
     "CCO": "r",
-    "CCw": "w/y",
+    "CCw": [
+      "w",
+      "y"
+    ],
     "CCn": "n",
     "CCs": "s",
     "CCm": "m",
@@ -394,15 +496,42 @@
       "PAR": "au"
     },
     "ASSOCIATIVE": {
-      "APL": "ia/aì",
-      "PUR": "ie/eì",
-      "TRA": "io/oì",
-      "DFR": "iö/öì",
-      "CRS": "ië/ëì",
-      "TSP": "uö/öù",
-      "CMM": "uo/où",
-      "CMP": "ue/eù",
-      "CSD": "ua/aù"
+      "APL": [
+        "ia",
+        "aì"
+      ],
+      "PUR": [
+        "ie",
+        "eì"
+      ],
+      "TRA": [
+        "io",
+        "oì"
+      ],
+      "DFR": [
+        "iö",
+        "öì"
+      ],
+      "CRS": [
+        "ië",
+        "ëì"
+      ],
+      "TSP": [
+        "uö",
+        "öù"
+      ],
+      "CMM": [
+        "uo",
+        "où"
+      ],
+      "CMP": [
+        "ue",
+        "eù"
+      ],
+      "CSD": [
+        "ua",
+        "aù"
+      ]
     },
     "ADVERBIAL": {
       "CON": "ao",
@@ -436,14 +565,38 @@
       "PLM": "áu"
     },
     "RELATIONAL I": {
-      "REF": "iá/aí",
-      "COR": "ié/eí",
-      "CPS": "ió/oí",
-      "DEP": "iô/öí",
-      "PRD": "uô/öú",
-      "ESS": "uó/oú",
-      "ASI": "ué/eú",
-      "CFM": "uá/aú"
+      "REF": [
+        "iá",
+        "aí"
+      ],
+      "COR": [
+        "ié",
+        "eí"
+      ],
+      "CPS": [
+        "ió",
+        "oí"
+      ],
+      "DEP": [
+        "iô",
+        "öí"
+      ],
+      "PRD": [
+        "uô",
+        "öú"
+      ],
+      "ESS": [
+        "uó",
+        "oú"
+      ],
+      "ASI": [
+        "ué",
+        "eú"
+      ],
+      "CFM": [
+        "uá",
+        "aú"
+      ]
     },
     "RELATIONAL II": {
       "ACT": "aó",
@@ -465,7 +618,10 @@
         "antepenultimate": "ai"
       },
       "ALG": {
-        "antepenultimate": "ia/aì"
+        "antepenultimate": [
+          "ia",
+          "aì"
+        ]
       },
       "IPU": {
         "antepenultimate": "ao"
@@ -479,7 +635,10 @@
         "penultimate": "aya"
       },
       "CJT": {
-        "pre-antepenultimate": "ia/aì",
+        "pre-antepenultimate": [
+          "ia",
+          "aì"
+        ],
         "penultimate": "aye"
       },
       "EXV": {
@@ -501,7 +660,10 @@
         "antepenultimate": "ei"
       },
       "ALG": {
-        "antepenultimate": "ie/eì"
+        "antepenultimate": [
+          "ie",
+          "eì"
+        ]
       },
       "IPU": {
         "antepenultimate": "eo"
@@ -515,7 +677,10 @@
         "penultimate": "eya"
       },
       "CJT": {
-        "pre-antepenultimate": "ie/eì",
+        "pre-antepenultimate": [
+          "ie",
+          "eì"
+        ],
         "penultimate": "eye"
       },
       "EXV": {
@@ -537,7 +702,10 @@
         "antepenultimate": "oi"
       },
       "ALG": {
-        "antepenultimate": "io/oì"
+        "antepenultimate": [
+          "io",
+          "oì"
+        ]
       },
       "IPU": {
         "antepenultimate": "oa"
@@ -551,7 +719,10 @@
         "penultimate": "oya"
       },
       "CJT": {
-        "pre-antepenultimate": "io/oì",
+        "pre-antepenultimate": [
+          "io",
+          "oì"
+        ],
         "penultimate": "oye"
       },
       "EXV": {
@@ -573,7 +744,10 @@
         "antepenultimate": "ui"
       },
       "ALG": {
-        "antepenultimate": "iö/öì"
+        "antepenultimate": [
+          "iö",
+          "öì"
+        ]
       },
       "IPU": {
         "antepenultimate": "oe"
@@ -587,7 +761,10 @@
         "penultimate": "uya"
       },
       "CJT": {
-        "pre-antepenultimate": "iö/öì",
+        "pre-antepenultimate": [
+          "iö",
+          "öì"
+        ],
         "penultimate": "uye"
       },
       "EXV": {
@@ -609,7 +786,10 @@
         "antepenultimate": "ëi"
       },
       "ALG": {
-        "antepenultimate": "ië/ëì"
+        "antepenultimate": [
+          "ië",
+          "ëì"
+        ]
       },
       "IPU": {
         "antepenultimate": "ea"
@@ -623,7 +803,10 @@
         "penultimate": "ëya"
       },
       "CJT": {
-        "pre-antepenultimate": "ië/ëì",
+        "pre-antepenultimate": [
+          "ië",
+          "ëì"
+        ],
         "penultimate": "ëye"
       },
       "EXV": {
@@ -645,7 +828,10 @@
         "antepenultimate": "iu"
       },
       "ALG": {
-        "antepenultimate": "uö/öù"
+        "antepenultimate": [
+          "uö",
+          "öù"
+        ]
       },
       "IPU": {
         "antepenultimate": "öe"
@@ -659,7 +845,10 @@
         "penultimate": "iwa"
       },
       "CJT": {
-        "pre-antepenultimate": "uö/öù",
+        "pre-antepenultimate": [
+          "uö",
+          "öù"
+        ],
         "penultimate": "iwe"
       },
       "EXV": {
@@ -681,7 +870,10 @@
         "antepenultimate": "ou"
       },
       "ALG": {
-        "antepenultimate": "uo/où"
+        "antepenultimate": [
+          "uo",
+          "où"
+        ]
       },
       "IPU": {
         "antepenultimate": "öa"
@@ -695,7 +887,10 @@
         "penultimate": "owa"
       },
       "CJT": {
-        "pre-antepenultimate": "uo/où",
+        "pre-antepenultimate": [
+          "uo",
+          "où"
+        ],
         "penultimate": "owe"
       },
       "EXV": {
@@ -717,7 +912,10 @@
         "antepenultimate": "eu"
       },
       "ALG": {
-        "antepenultimate": "ue/eù"
+        "antepenultimate": [
+          "ue",
+          "eù"
+        ]
       },
       "IPU": {
         "antepenultimate": "eö"
@@ -731,7 +929,10 @@
         "penultimate": "ewa"
       },
       "CJT": {
-        "pre-antepenultimate": "ue/eù",
+        "pre-antepenultimate": [
+          "ue",
+          "eù"
+        ],
         "penultimate": "ewe"
       },
       "EXV": {
@@ -753,7 +954,10 @@
         "antepenultimate": "au"
       },
       "ALG": {
-        "antepenultimate": "ua/aù"
+        "antepenultimate": [
+          "ua",
+          "aù"
+        ]
       },
       "IPU": {
         "antepenultimate": "aö"
@@ -767,7 +971,10 @@
         "penultimate": "awa"
       },
       "CJT": {
-        "pre-antepenultimate": "ua/aù",
+        "pre-antepenultimate": [
+          "ua",
+          "aù"
+        ],
         "penultimate": "awe"
       },
       "EXV": {

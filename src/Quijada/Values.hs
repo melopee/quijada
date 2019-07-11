@@ -103,11 +103,26 @@ values = [
         P "INT" "ae"
       ],
       L "DYN" [
-        P "BSC" "ia/ua",
-        P "CTE" "ie/ue",
-        P "CSV" "io/uo",
-        P "OBJ" "iö/uö",
-        P "INT" "ië/uë"
+        L "BSC" [
+          N "ia",
+          N "ua"
+        ],
+        L "CTE" [
+          N "ie",
+          N "ue"
+        ],
+        L "CSV" [
+          N "io",
+          N "uo"
+        ],
+        L "OBJ" [
+          N "iö",
+          N "uö"
+        ],
+        L "INT" [
+          N "ië",
+          N "uë"
+        ]
       ]
     ]
   ],
@@ -137,16 +152,46 @@ values = [
       P "9" "au"
     ],
     L "TYPE:3" [
-      P "0" "uë/ëù",
-      P "1" "ia/aì",
-      P "2" "ie/eì",
-      P "3" "io/oì",
-      P "4" "iö/öì",
-      P "5" "ië/ëì",
-      P "6" "uö/öù",
-      P "7" "uo/où",
-      P "8" "ue/eù",
-      P "9" "ua/aù"
+      L "0" [
+        N "uë",
+        N "ëù"
+      ],
+      L "1" [
+        N "ia",
+        N "aì"
+      ],
+      L "2" [
+        N "ie",
+        N "eì"
+      ],
+      L "3" [
+        N "io",
+        N "oì"
+      ],
+      L "4" [
+        N "iö",
+        N "öì"
+      ],
+      L "5" [
+        N "ië",
+        N "ëì"
+      ],
+      L "6" [
+        N "uö",
+        N "öù"
+      ],
+      L "7" [
+        N "uo",
+        N "où"
+      ],
+      L "8" [
+        N "ue",
+        N "eù"
+      ],
+      L "9" [
+        N "ua",
+        N "aù"
+      ]
     ],
     L "Ca:STACKING" [
       P "MAIN" "uä",
@@ -155,35 +200,74 @@ values = [
   ],
   L "Ca" [
     L "AFFILIATION" [
-      P "CSL" "∅/l",
-      P "ASO" "tļ/l-",
+      L "CSL" [
+        N "∅",
+        N "l"
+      ],
+      L "ASO" [
+        N "tļ",
+        N "l-"
+      ],
       P "VAR" "r",
       P "COA" "ř"
     ],
     L "CONFIGURATION" [
       P "UNI" "∅",
-      P "DPX" "ň/nt",
-      P "DCT" "f/v",
-      P "AGG" "ţ/ḑ",
+      L "DPX" [
+        N "ň",
+        N "nt"
+      ],
+      L "DCT" [
+        N "f",
+        N "v"
+      ],
+      L "AGG" [
+        N "ţ",
+        N "ḑ"
+      ],
       P "SEG" "m",
-      P "CPN" "n/nk",
-      P "COH" "t/d",
-      P "CST" "k/g",
-      P "MLT" "p/b"
+      L "CPN" [
+        N "n",
+        N "nk"
+      ],
+      L "COH" [
+        N "t",
+        N "d"
+      ],
+      L "CST" [
+        N "k",
+        N "g"
+      ],
+      L "MLT" [
+        N "p",
+        N "b"
+      ]
     ],
     L "EXTENSION" [
       P "DEL" "∅",
       P "PRX" "s",
       P "ICP" "z",
-      P "ATV" "ţ/f",
+      L "ATV" [
+        N "ţ",
+        N "f"
+      ],
       P "GRA" "š",
       P "DPL" "ž"
     ],
     L "PERSPECTIVE" [
       P "M" "∅",
-      P "P" "t/m",
-      P "N" "k/m",
-      P "A" "p/m"
+      L "P" [
+        N "t",
+        N "m"
+      ],
+      L "N" [
+        N "k",
+        N "m"
+      ],
+      L "A" [
+        N "p",
+        N "m"
+      ]
     ],
     L "ESSENCE" [
       P "NRM" "∅",
@@ -191,13 +275,25 @@ values = [
     ],
     L "CONTEXT" [
       P "EXS" "∅",
-      P "FNC" "l/ly",
-      P "RPS" "r/ry",
-      P "AMG" "w/řy"
+      L "FNC" [
+        N "l",
+        N "ly"
+      ],
+      L "RPS" [
+        N "r",
+        N "ry"
+      ],
+      L "AMG" [
+        N "w",
+        N "řy"
+      ]
     ]
   ],
   L "Vn" [
-    P "MNO" "∅/A",
+    L "MNO" [
+      N "∅",
+      N "A"
+    ],
     P "PRL" "e",
     P "CRO" "o",
     P "RCP" "u",
@@ -269,7 +365,10 @@ values = [
     P "HYP" "ö’"
   ],
   L "Vm2" [
-    P "null" "∅/ë",
+    L "null" [
+      N "∅",
+      N "ë"
+    ],
     P "FAC" "a",
     P "SUB" "e",
     P "ASM" "i",
@@ -364,7 +463,10 @@ values = [
   ],
   L "Cc" [
     P "CCO" "r",
-    P "CCw" "w/y",
+    L "CCw" [
+      N "w",
+      N "y"
+    ],
     P "CCn" "n",
     P "CCs" "s",
     P "CCm" "m",
@@ -398,15 +500,42 @@ values = [
       P "PAR" "au"
     ],
     L "ASSOCIATIVE" [
-      P "APL" "ia/aì",
-      P "PUR" "ie/eì",
-      P "TRA" "io/oì",
-      P "DFR" "iö/öì",
-      P "CRS" "ië/ëì",
-      P "TSP" "uö/öù",
-      P "CMM" "uo/où",
-      P "CMP" "ue/eù",
-      P "CSD" "ua/aù"
+      L "APL" [
+        N "ia",
+        N "aì"
+      ],
+      L "PUR" [
+        N "ie",
+        N "eì"
+      ],
+      L "TRA" [
+        N "io",
+        N "oì"
+      ],
+      L "DFR" [
+        N "iö",
+        N "öì"
+      ],
+      L "CRS" [
+        N "ië",
+        N "ëì"
+      ],
+      L "TSP" [
+        N "uö",
+        N "öù"
+      ],
+      L "CMM" [
+        N "uo",
+        N "où"
+      ],
+      L "CMP" [
+        N "ue",
+        N "eù"
+      ],
+      L "CSD" [
+        N "ua",
+        N "aù"
+      ]
     ],
     L "ADVERBIAL" [
       P "CON" "ao",
@@ -440,14 +569,38 @@ values = [
       P "PLM" "áu"
     ],
     L "RELATIONAL I" [
-      P "REF" "iá/aí",
-      P "COR" "ié/eí",
-      P "CPS" "ió/oí",
-      P "DEP" "iô/öí",
-      P "PRD" "uô/öú",
-      P "ESS" "uó/oú",
-      P "ASI" "ué/eú",
-      P "CFM" "uá/aú"
+      L "REF" [
+        N "iá",
+        N "aí"
+      ],
+      L "COR" [
+        N "ié",
+        N "eí"
+      ],
+      L "CPS" [
+        N "ió",
+        N "oí"
+      ],
+      L "DEP" [
+        N "iô",
+        N "öí"
+      ],
+      L "PRD" [
+        N "uô",
+        N "öú"
+      ],
+      L "ESS" [
+        N "uó",
+        N "oú"
+      ],
+      L "ASI" [
+        N "ué",
+        N "eú"
+      ],
+      L "CFM" [
+        N "uá",
+        N "aú"
+      ]
     ],
     L "RELATIONAL II" [
       P "ACT" "aó",
@@ -469,7 +622,10 @@ values = [
         P "antepenultimate" "ai"
       ],
       L "ALG" [
-        P "antepenultimate" "ia/aì"
+        L "antepenultimate" [
+          N "ia",
+          N "aì"
+        ]
       ],
       L "IPU" [
         P "antepenultimate" "ao"
@@ -483,7 +639,10 @@ values = [
         P "penultimate" "aya"
       ],
       L "CJT" [
-        P "pre-antepenultimate" "ia/aì",
+        L "pre-antepenultimate" [
+          N "ia",
+          N "aì"
+        ],
         P "penultimate" "aye"
       ],
       L "EXV" [
@@ -505,7 +664,10 @@ values = [
         P "antepenultimate" "ei"
       ],
       L "ALG" [
-        P "antepenultimate" "ie/eì"
+        L "antepenultimate" [
+          N "ie",
+          N "eì"
+        ]
       ],
       L "IPU" [
         P "antepenultimate" "eo"
@@ -519,7 +681,10 @@ values = [
         P "penultimate" "eya"
       ],
       L "CJT" [
-        P "pre-antepenultimate" "ie/eì",
+        L "pre-antepenultimate" [
+          N "ie",
+          N "eì"
+        ],
         P "penultimate" "eye"
       ],
       L "EXV" [
@@ -541,7 +706,10 @@ values = [
         P "antepenultimate" "oi"
       ],
       L "ALG" [
-        P "antepenultimate" "io/oì"
+        L "antepenultimate" [
+          N "io",
+          N "oì"
+        ]
       ],
       L "IPU" [
         P "antepenultimate" "oa"
@@ -555,7 +723,10 @@ values = [
         P "penultimate" "oya"
       ],
       L "CJT" [
-        P "pre-antepenultimate" "io/oì",
+        L "pre-antepenultimate" [
+          N "io",
+          N "oì"
+        ],
         P "penultimate" "oye"
       ],
       L "EXV" [
@@ -577,7 +748,10 @@ values = [
         P "antepenultimate" "ui"
       ],
       L "ALG" [
-        P "antepenultimate" "iö/öì"
+        L "antepenultimate" [
+          N "iö",
+          N "öì"
+        ]
       ],
       L "IPU" [
         P "antepenultimate" "oe"
@@ -591,7 +765,10 @@ values = [
         P "penultimate" "uya"
       ],
       L "CJT" [
-        P "pre-antepenultimate" "iö/öì",
+        L "pre-antepenultimate" [
+          N "iö",
+          N "öì"
+        ],
         P "penultimate" "uye"
       ],
       L "EXV" [
@@ -613,7 +790,10 @@ values = [
         P "antepenultimate" "ëi"
       ],
       L "ALG" [
-        P "antepenultimate" "ië/ëì"
+        L "antepenultimate" [
+          N "ië",
+          N "ëì"
+        ]
       ],
       L "IPU" [
         P "antepenultimate" "ea"
@@ -627,7 +807,10 @@ values = [
         P "penultimate" "ëya"
       ],
       L "CJT" [
-        P "pre-antepenultimate" "ië/ëì",
+        L "pre-antepenultimate" [
+          N "ië",
+          N "ëì"
+        ],
         P "penultimate" "ëye"
       ],
       L "EXV" [
@@ -649,7 +832,10 @@ values = [
         P "antepenultimate" "iu"
       ],
       L "ALG" [
-        P "antepenultimate" "uö/öù"
+        L "antepenultimate" [
+          N "uö",
+          N "öù"
+        ]
       ],
       L "IPU" [
         P "antepenultimate" "öe"
@@ -663,7 +849,10 @@ values = [
         P "penultimate" "iwa"
       ],
       L "CJT" [
-        P "pre-antepenultimate" "uö/öù",
+        L "pre-antepenultimate" [
+          N "uö",
+          N "öù"
+        ],
         P "penultimate" "iwe"
       ],
       L "EXV" [
@@ -685,7 +874,10 @@ values = [
         P "antepenultimate" "ou"
       ],
       L "ALG" [
-        P "antepenultimate" "uo/où"
+        L "antepenultimate" [
+          N "uo",
+          N "où"
+        ]
       ],
       L "IPU" [
         P "antepenultimate" "öa"
@@ -699,7 +891,10 @@ values = [
         P "penultimate" "owa"
       ],
       L "CJT" [
-        P "pre-antepenultimate" "uo/où",
+        L "pre-antepenultimate" [
+          N "uo",
+          N "où"
+        ],
         P "penultimate" "owe"
       ],
       L "EXV" [
@@ -721,7 +916,10 @@ values = [
         P "antepenultimate" "eu"
       ],
       L "ALG" [
-        P "antepenultimate" "ue/eù"
+        L "antepenultimate" [
+          N "ue",
+          N "eù"
+        ]
       ],
       L "IPU" [
         P "antepenultimate" "eö"
@@ -735,7 +933,10 @@ values = [
         P "penultimate" "ewa"
       ],
       L "CJT" [
-        P "pre-antepenultimate" "ue/eù",
+        L "pre-antepenultimate" [
+          N "ue",
+          N "eù"
+        ],
         P "penultimate" "ewe"
       ],
       L "EXV" [
@@ -757,7 +958,10 @@ values = [
         P "antepenultimate" "au"
       ],
       L "ALG" [
-        P "antepenultimate" "ua/aù"
+        L "antepenultimate" [
+          N "ua",
+          N "aù"
+        ]
       ],
       L "IPU" [
         P "antepenultimate" "aö"
@@ -771,7 +975,10 @@ values = [
         P "penultimate" "awa"
       ],
       L "CJT" [
-        P "pre-antepenultimate" "ua/aù",
+        L "pre-antepenultimate" [
+          N "ua",
+          N "aù"
+        ],
         P "penultimate" "awe"
       ],
       L "EXV" [
