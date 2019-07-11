@@ -1,13 +1,11 @@
 {-# LANGUAGE FlexibleContexts #-}
-{-# LANGUAGE NoMonomorphismRestriction #-}
 
 module Quijada.Utils where
 
 import Quijada.Values
 
 import Text.Parsec
-import Text.Parsec.String
-import Melib as M (show)
+import Data.List
 
 -- ## utility functions for the AST type, Tree
 -- Tree is defined in Values.hs because this file depends on it, and Utils.hs depends on Values.hs
@@ -34,10 +32,10 @@ import Melib as M (show)
 --     ]
 -- ]
 
--- instance Show Tree where
---     M.show (N s) = M.show s
---     M.show (P s a) = "(" ++ M.show s ++ ": " ++ M.show a ++ ")"
---     M.show (L aa) = "(" ++ (concat . map M.show $ aa) ++ ")"
+instance Show Tree where
+    show (N s) = prettyShow s
+    show (P s a) = "(" ++ prettyShow s ++ ": " ++ prettyShow a ++ ")"
+    show (L s aa) = "(" ++ prettyShow s ++ ": " ++ (intercalate ", " . map prettyShow $ aa) ++ ")"
 
 zeroTree = L "" []
 zeroP = \k -> P k ""
@@ -56,6 +54,7 @@ eqv (L k v) (N b) = False
 eqv (L k v) b@(P _ _) = False
 eqv (L ka va) (L kb vb) = and $ zipWith (eqv) va vb
 
+
 concaTree (N a) (N b) = N (a ++ b)
 concaTree (N a) (P k v) = P k (a++v)
 concaTree (N a) (L k v) = L k ((N a):v)
@@ -66,14 +65,17 @@ concaTree (L k v) (N b) = L k (v++[(N b)])
 concaTree (L k v) b@(P _ _) = L k (b:v)
 concaTree (L ka va) (L kb vb) = L (ka ++ kb) (va ++ vb)
 
+concaTrees :: [Tree] -> Tree
 concaTrees = foldl (concaTree) zeroTree
+
+type ParserTree = Parsec String [Tree] Tree
 
 -- | The only function that relates to Tree and Applicative.
 -- | The others above only operate on Tree, thus they can be used freely with fmap on the Parsec's Parser Functor. If they were meddling with Applicative, an empty parser would have to be provided every once and so.
 infixl 2 ><
+(><) :: ParserTree -> ParserTree -> ParserTree
 (><) = \x y -> concaTree <$> x <*> y
 
-type ParserTree = Parsec String [Tree] Tree
 
 
 -- ## some functions to perform lookup on Tree, as Tree is also used for serializing the scraped morpho-phonological values
@@ -108,32 +110,35 @@ fromVal v = valueFrom v $ vLeaves . head . kvLookup1 v $ values
 
 
 -- ## useful and unrelated functions
-infixl 2 <⋅>
-(<⋅>) = flip (<$>)
-
-infixl 2 ⋅
-(⋅) = flip ($)
-
-infixl 2 ⁓
-(⁓) = flip (.)
-
 infixl 2 ?
 (?) b a = option a b
 
+no :: (Stream s m t, Show a) => ParsecT s u m a -> ParsecT s u m ()
 no = notFollowedBy
 
-appendStateTo parser = parser >>= (\parse -> (getState >>= (\state -> return (parse, state))))
 
 
+prettyShow :: Show a => a -> String
+prettyShow x = con (show x) where
+  con :: String -> String
+  con [] = ([])
+  con li@(x:xs) | x == '\"' = str++(con rest)
+                | x == '\'' = char:(con rest')
+                | otherwise = x:con xs where
+                  (str,rest):_ = reads li
+                  (char,rest'):_ = reads li
 
 prettyState r = case r of
-    Left e -> M.show e
-    Right (parse,state) -> ("parse: " ++ M.show parse) ++ "\n" ++ ("state: " ++ M.show state)
+    Left e -> prettyShow e
+    Right (parse,state) -> ("parse: " ++ prettyShow parse) ++ "\n" ++ ("state: " ++ prettyShow state)
 
 prettyNotState r = case r of
-    Left e -> M.show e
-    Right i -> M.show i
+    Left e -> prettyShow e
+    Right i -> prettyShow i
 
+
+
+appendStateTo parser = parser >>= (\parse -> (getState >>= (\state -> return (parse, state))))
 
 run parser = runParser parser [] ""
 

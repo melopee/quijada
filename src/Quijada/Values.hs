@@ -1,6 +1,6 @@
 module Quijada.Values where
 
-data Tree = N String | P String String | L String [Tree] deriving (Show, Eq)
+data Tree = N String | P String String | L String [Tree] deriving (Eq)
 
 values = [
   L "Cd" [
