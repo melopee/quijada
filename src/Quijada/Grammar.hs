@@ -3,7 +3,6 @@ module Quijada.Grammar where
 import Quijada.Utils
 import Quijada.Values
 import Text.Parsec
-import Text.Parsec.String
 
 -- TODO:
 -- build script for convert_value.sh
@@ -160,7 +159,7 @@ i = N <$> string "i"
 
 
 consonant :: ParserTree
-consonant = p <|> b <|> t <|> d <|> k <|> g <|> glottal <|> f <|> v <|> ţ <|> ḑ <|> s <|> z <|> š <|> ž <|> x <|> h <|> ļ <|> c <|> ż <|> č <|> j <|> m <|> n <|> ň <|> r <|> l <|> w <|> y <|> ř
+consonant = p <|> b <|> t <|> d <|> k <|> g {- <|> glottal -} <|> f <|> v <|> ţ <|> ḑ <|> s <|> z <|> š <|> ž <|> x <|> h <|> ļ <|> c <|> ż <|> č <|> j <|> m <|> n <|> ň <|> r <|> l <|> w <|> y <|> ř
 
 vowel :: ParserTree
 vowel = a <|> e <|> o <|> u <|> i <|> ä <|> ë <|> ö <|> ü <|>
@@ -170,37 +169,55 @@ wy :: ParserTree
 wy = w <|> y
 
 glottal_wy :: ParserTree
-glottal_wy = (glottal >< w) <|> (glottal >< y)
+glottal_wy = try (glottal >< w) <|> (glottal >< y)
 
 monoconsonantal :: ParserTree
 monoconsonantal = no ļ *> no glottal *> no h *> no y *> no w *> consonant
 
 polyconsonantal :: ParserTree
-polyconsonantal = consonant >< (concaTrees <$> many1 consonant)
+polyconsonantal = consonant >< (many1Trees consonant)
 
 initial_cr_raw :: ParserTree
-initial_cr_raw = monoconsonantal <|> polyconsonantal -- <⋅> (concaTree (zeroP "Cr"))
+initial_cr_raw =  try polyconsonantal <|> monoconsonantal
 
 mid_cr_raw :: ParserTree
-mid_cr_raw = (concaTrees <$> many1 consonant) -- <⋅> (concaTree (zeroP "Cr"))
+mid_cr_raw = (many1Trees consonant)
+
+-- raw: used for the phonology or the phonotactics,
+-- without raw, used for the morpho-phonology
 
 mid_cr :: ParserTree
-mid_cr = (concaTree (zeroP "Cr")) <$> mid_cr_raw
+mid_cr = (concaTree (P "Cr" "")) <$> mid_cr_raw
 
 initial_cr :: ParserTree
-initial_cr = (concaTree (zeroP "Cr")) <$> initial_cr_raw
-
+initial_cr = (concaTree (P "Cr" "")) <$> initial_cr_raw
 
 vr_stateless :: ParserTree
 vr_stateless = fromVal "Vr"
 
 vr :: ParserTree
 vr = do
-    x <- vr_stateless
-    case x of
-        P k v -> (if length v == 2 then modifyState ((P k [v!!1]):) else modifyState ((P k v):))
+    v <- vr_stateless
+    case v of
+        P k v -> if length v == 2
+                 then modifyState ((P k [v!!1]):)
+                 else modifyState ((P k v):)
         _ -> return ()
-    return x
+    return v
+
+vstar :: ParserTree
+vstar = setk "V*" <$> do
+    cd <- try glottal_wy <|> try wy <|> glottal
+    if cd `eqv` (N "’")
+        then return cd
+        else do
+            v <- try vowel
+            state <- getState
+            case kvLookup1 "Vr" state of
+                [] -> unexpected "error: expected a V* slot, must appear after a Vr slot"
+                (res:_) -> if res `eqv` v
+                 then return (concaTree cd v)
+                 else unexpected "error: V* does not match Vr2."
 
 cd :: ParserTree
 cd = fromVal "Cd"
@@ -212,7 +229,7 @@ vx :: ParserTree
 vx = fromVal "Vx"
 
 cs :: ParserTree
-cs = (concaTree (zeroP "Cs")) <$> mid_cr_raw
+cs = (concaTree (P "Cs" "")) <$> mid_cr_raw
 
 vn :: ParserTree
 vn = fromVal "Vn"
@@ -251,25 +268,26 @@ vk :: ParserTree
 vk = fromVal "Vk"
 
 cb :: ParserTree
-cb = (concaTree (zeroP "Cb")) <$> glottal >< initial_cr_raw
-
-vstar :: ParserTree
-vstar = do
-    x <- try vowel -- <|> try (glottal >< vr_stateless) <|> try (wy >< vr_stateless) <|> (glottal_wy >< vr_stateless)
-    state <- getState
-    case kvLookup1 "Vr" state of
-        [] -> unexpected "error: expected a V* slot, must appear after a Vr slot"
-        (res:_) -> if res `eqv` x then return x
-            else unexpected "error: V* does not match Vr2."
+cb = (concaTree (P "Cb" "")) <$> glottal >< initial_cr_raw
 
 -- | parse slots VII to XIV
 formativeTail = setk "formativeTail" <$>
-    ca >< ({-many-} (vx >< cs))
-    >< ((vn <|> vm1 <|> vt1) >< (vp <|> vl <|> ve <|> vm2 <|> vt2) >< (cc <|> cm)) >< (vc <|> vk) >< (cb ? zeroTree)
+    ((many1Trees (cs >< vx)) >< glottal) ? zeroTree
+    >< ca
+    >< (manyTryTrees (vx >< cs))
+    ><
+    ((
+        ((vn <|> vm1 <|> vt1) ? zeroTree)
+        >< ((vp <|> vl <|> ve <|> vm2 <|> vt2) ? zeroTree)
+        >< (cc <|> cm)
+    ) ? zeroTree)
+    -- >< (vc <|> vk)
+    -- >< (cb ? zeroTree)
 
-simpleFormative = setk "formativeTail" <$>
+simpleFormative = setk "simpleFormative" <$>
     (try (cd >< vr >< mid_cr >< ë) <|> (initial_cr >< vr >< vstar))
 
-complexFormative = simpleFormative
+complexFormative = setk "complexFormative" <$>
+    simpleFormative
 
 root = simpleFormative <|> complexFormative

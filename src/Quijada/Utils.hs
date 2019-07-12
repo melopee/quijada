@@ -3,7 +3,6 @@
 module Quijada.Utils where
 
 import Quijada.Values
-
 import Text.Parsec
 import Data.List
 
@@ -37,10 +36,9 @@ instance Show Tree where
     show (P s a) = "(" ++ prettyShow s ++ ": " ++ prettyShow a ++ ")"
     show (L s aa) = "(" ++ prettyShow s ++ ": " ++ (intercalate ", " . map prettyShow $ aa) ++ ")"
 
-zeroTree = L "" []
-zeroP = \k -> P k ""
+zeroTree = N ""
 
-setk n (N _) = N n
+setk n (N v) = P n v
 setk n (L k v) = L n v
 setk n (P k v) = P n v
 
@@ -54,15 +52,14 @@ eqv (L k v) (N b) = False
 eqv (L k v) b@(P _ _) = False
 eqv (L ka va) (L kb vb) = and $ zipWith (eqv) va vb
 
-
 concaTree (N a) (N b) = N (a ++ b)
 concaTree (N a) (P k v) = P k (a++v)
-concaTree (N a) (L k v) = L k ((N a):v)
+concaTree (N a) (L k v) = if a /= "" then L k ((N a):v) else L k v
 concaTree (P k v) (N b) = P k (v++b)
 concaTree a@(P _ _) b@(P _ _) = L "" [a,b]
 concaTree a@(P _ _) (L k v) = L k (a:v)
-concaTree (L k v) (N b) = L k (v++[(N b)])
-concaTree (L k v) b@(P _ _) = L k (b:v)
+concaTree (L k v) (N b) = if b /= "" then L k (v++[(N b)]) else L k v
+concaTree (L k v) b@(P _ _) = L k (v++[b])
 concaTree (L ka va) (L kb vb) = L (ka ++ kb) (va ++ vb)
 
 concaTrees :: [Tree] -> Tree
@@ -76,41 +73,32 @@ infixl 2 ><
 (><) :: ParserTree -> ParserTree -> ParserTree
 (><) = \x y -> concaTree <$> x <*> y
 
+many1Trees :: ParserTree -> ParserTree
+many1Trees parser = concaTrees <$> many1 parser
 
+manyTrees :: ParserTree -> ParserTree
+manyTrees parser = concaTrees <$> many parser
 
--- ## some functions to perform lookup on Tree, as Tree is also used for serializing the scraped morpho-phonological values
-kvLookup1 :: String -> [Tree] -> [Tree]
-kvLookup1 _ [] = []
-kvLookup1 needle ((N hay):stack) = kvLookup1 needle stack
-kvLookup1 needle (hay@(P k v):stack) = if needle == k then hay:(kvLookup1 needle stack) else kvLookup1 needle stack
-kvLookup1 needle (hay@(L k v):stack) = if needle == k then hay:(kvLookup1 needle stack) else kvLookup1 needle stack
-
-vLeaves :: Tree -> [String]
-vLeaves (N s) = [s]
-vLeaves (P k v) = [v]
-vLeaves (L k v) = concat . map (vLeaves) $ v
-
-kvLeaves :: Tree -> [(String,String)]
-kvLeaves (N s) = [([], s)]
-kvLeaves (P k v) = [(k, v)]
-kvLeaves (L k v) = concat . map kvLeaves $ v
-
-kvLeavesPath :: Tree -> [([String],String)]
-kvLeavesPath (N s) = [([], s)]
-kvLeavesPath (P k v) = [([k], v)]
-kvLeavesPath (L k v) = appendKeysAsPath k . concat . map kvLeavesPath $ v where
-    appendKeysAsPath k = map (\(x,y) -> (k:x, y))
-
+manyTryTrees :: ParserTree -> ParserTree
+manyTryTrees parser = do
+    t <- try parser
+    case t of
+        Left e -> return zeroTree
+        Right i -> (concaTree i) <$> manyTryTrees parser
 
 -- ## functions generating parsers based on morpho-phonological values
-valueFrom _ [] = parserZero
-valueFrom v (x:xs) = try (P v <$> string x) <|> (valueFrom v xs)
+
+makeLongestFirst = reverse . sortBy (\x y -> compare (length x) (length y))
+
+valueFrom v l = aux v (makeLongestFirst l) where
+    aux _ [] = parserZero
+    aux v (x:xs) = (try (P v <$> string x)) <|> (aux v xs)
 
 fromVal v = valueFrom v $ vLeaves . head . kvLookup1 v $ values
 
 
 -- ## useful and unrelated functions
-infixl 2 ?
+infixl 3 ?
 (?) b a = option a b
 
 no :: (Stream s m t, Show a) => ParsecT s u m a -> ParsecT s u m ()
@@ -140,21 +128,48 @@ prettyNotState r = case r of
 
 appendStateTo parser = parser >>= (\parse -> (getState >>= (\state -> return (parse, state))))
 
-run parser = runParser parser [] ""
+run parser = runParser (parser <* eof) [] ""
 
-runWith state parser = runParser parser state ""
+runW state parser = runParser (parser <* eof) state ""
 
-runShow parser = runParser (appendStateTo parser) [] ""
+runS parser = runParser (appendStateTo parser <* eof) [] ""
 
-runWithShow state parser = runParser (appendStateTo parser) state ""
+runWS state parser = runParser (appendStateTo parser <* eof) state ""
 
+-- W: a state can be precised with the argument "state"
+-- S: modify the "parser" arg so that the state is appended
 
 rr parser s = prettyNotState (run parser s)
 
-rrW state parser s = prettyNotState (runWith state parser s)
+rrW state parser s = prettyNotState (runW state parser s)
 
-rrS parser s = prettyState (runShow parser s)
+rrS parser s = prettyState (runS parser s)
 
-rrWS state parser s = prettyState (runWithShow state parser s)
+rrWS state parser s = prettyState (runWS state parser s)
+
+
+
+-- ## some functions to perform lookup on Tree, as Tree is also used for serializing the scraped morpho-phonological values
+kvLookup1 :: String -> [Tree] -> [Tree]
+kvLookup1 _ [] = []
+kvLookup1 needle ((N hay):stack) = kvLookup1 needle stack
+kvLookup1 needle (hay@(P k v):stack) = if needle == k then hay:(kvLookup1 needle stack) else kvLookup1 needle stack
+kvLookup1 needle (hay@(L k v):stack) = if needle == k then hay:(kvLookup1 needle stack) else kvLookup1 needle stack
+
+vLeaves :: Tree -> [String]
+vLeaves (N s) = [s]
+vLeaves (P k v) = [v]
+vLeaves (L k v) = concat . map (vLeaves) $ v
+
+kvLeaves :: Tree -> [(String,String)]
+kvLeaves (N s) = [([], s)]
+kvLeaves (P k v) = [(k, v)]
+kvLeaves (L k v) = concat . map kvLeaves $ v
+
+kvLeavesPath :: Tree -> [([String],String)]
+kvLeavesPath (N s) = [([], s)]
+kvLeavesPath (P k v) = [([k], v)]
+kvLeavesPath (L k v) = appendKeysAsPath k . concat . map kvLeavesPath $ v where
+    appendKeysAsPath k = map (\(x,y) -> (k:x, y))
 
 
