@@ -6,9 +6,14 @@ import Text.Parsec
 
 -- TODO:
 -- build script for convert_value.sh
--- rewrite ValProc.hs
 -- generate those with Phonology.hs
 -- merge Phonology.hs, the .hjson data and ValProc.hs in a coherent scheme
+-- preproc the input: replace weird chars with space so that error column/line is still relevant in the not preprocessed input
+-- check for phonotactics before parsing words
+-- check for stress after having parsed words
+-- build inter-word dependency relation after having parsed words
+
+
 
 p :: ParserTree
 p = N <$> string "p"
@@ -100,6 +105,7 @@ y = N <$> string "y"
 ř :: ParserTree
 ř = N <$> string "ř"
 
+
 a :: ParserTree
 a = N <$> string "a"
 
@@ -115,6 +121,7 @@ u = N <$> string "u"
 i :: ParserTree
 i = N <$> string "i"
 
+
 ä :: ParserTree
 ä = N <$> string "ä"
 
@@ -126,6 +133,7 @@ i = N <$> string "i"
 
 ü :: ParserTree
 ü = N <$> string "ü"
+
 
 à :: ParserTree
 à = N <$> string "à"
@@ -141,6 +149,23 @@ i = N <$> string "i"
 
 ì :: ParserTree
 ì = N <$> string "ì"
+
+
+á :: ParserTree
+á = N <$> string "á"
+
+é :: ParserTree
+é = N <$> string "é"
+
+ó :: ParserTree
+ó = N <$> string "ó"
+
+ú :: ParserTree
+ú = N <$> string "ú"
+
+í :: ParserTree
+í = N <$> string "í"
+
 
 â :: ParserTree
 â = N <$> string "â"
@@ -158,12 +183,30 @@ i = N <$> string "i"
 î = N <$> string "î"
 
 
+
 consonant :: ParserTree
 consonant = p <|> b <|> t <|> d <|> k <|> g {- <|> glottal -} <|> f <|> v <|> ţ <|> ḑ <|> s <|> z <|> š <|> ž <|> x <|> h <|> ļ <|> c <|> ż <|> č <|> j <|> m <|> n <|> ň <|> r <|> l <|> w <|> y <|> ř
 
 vowel :: ParserTree
-vowel = a <|> e <|> o <|> u <|> i <|> ä <|> ë <|> ö <|> ü <|>
-        à <|> è <|> ò <|> ù <|> ì <|> â <|> ê <|> ô <|> û <|> î
+vowel = a <|> e <|> o <|> u <|> i
+    <|> ä <|> ë <|> ö <|> ü
+    <|> à <|> è <|> ò <|> ù <|> ì
+    <|> á <|> é <|> ó <|> ú <|> í
+    <|> â <|> ê <|> ô <|> û <|> î
+
+
+
+iDiphthong :: ParserTree
+iDiphthong = parser__from_values__ "" ["ai", "ei", "oi", "ui", "ëi"]
+
+uDiphthong :: ParserTree
+uDiphthong = parser__from_values__  "" ["au", "eu", "ou", "iu", "ëu"]
+
+diphthong :: ParserTree
+diphthong = try iDiphthong <|> uDiphthong
+
+disjunct :: ParserTree
+disjunct = no diphthong *> vowel >< vowel
 
 wy :: ParserTree
 wy = w <|> y
@@ -172,19 +215,123 @@ glottal_wy :: ParserTree
 glottal_wy = try (glottal >< w) <|> (glottal >< y)
 
 monoconsonantal :: ParserTree
-monoconsonantal = no ļ *> no glottal *> no h *> no y *> no w *> consonant
+monoconsonantal =
+    no ļ *> no glottal *> no h *> no w *> no y *>
+    consonant
 
-polyconsonantal :: ParserTree
-polyconsonantal = consonant >< (many1Trees consonant)
+biconsonantal :: ParserTree
+biconsonantal =
+    no (h><l) *> no (h><r) *> no (h><m) *> no (h><n) *> no (h><w) *> no (h><y) *>
+    no h *>
+    consonant >< consonant
+
+triconsonantal :: ParserTree
+triconsonantal =
+    no (h><l><l) *> no (h><r><r) *> no (h><m><m) *> no (h><n><n) *> no (h><y><w) *> no (h><h><y) *> no (h><l><w) *> no (h><r><w) *> no (h><m><w) *> no (h><n><w) *> no (h><l><y) *> no (h><r><y) *> no (h><m><y) *> no (h><n><y) *>
+    no h *>
+    consonant >< consonant >< consonant
+
+
+
+isSingle v = case (run vowel v) of
+    Left _ -> False
+    Right _ -> True
+
+isIDiphthong v = case (run iDiphthong v) of
+    Left _ -> False
+    Right _ -> True
+
+isUDiphthong v = case (run uDiphthong v) of
+    Left _ -> False
+    Right _ -> True
+
+isDisjunct v = case (run disjunct v) of
+    Left _ -> False
+    Right _ -> True
+
+insert m v
+    | isSingle v = case m of
+        "" -> [v]
+        "h" -> [v++m++v, v++m]
+        "y" -> [v++m++v]
+        "w" -> [v++m++v]
+        "’" -> [v++m++v, v++m]
+        "’h" -> [v++m++v, v++m]
+        "’y" -> [v++m++v]
+        "’w" -> [v++m++v]
+        _ -> [v]
+    | isIDiphthong v = let (q:p:_) = v in case m of
+        "" -> [v]
+        "h" -> [v++m++[q], v++m]
+        "y" -> [[q]++m++[p]]
+        "w" -> [v++m++[q]]
+        "’" -> [v++m++[q], v++m]
+        "’h" -> [v++m++[q], v++m]
+        "’y" -> [[q]++m++[p]]
+        "’w" -> [v++m++[q]]
+        _ -> [v]
+    | isUDiphthong v = let (q:p:_) = v in case m of
+        "" -> [v]
+        "h" -> [v++m++[q], v++m]
+        "y" -> [v++m++[q]]
+        "w" -> [[q]++m++[p]]
+        "’" -> [v++m++[q], v++m]
+        "’h" -> [v++m++[q], v++m]
+        "’y" -> [v++m++[q]]
+        "’w" -> [[q]++m++[p]]
+        _ -> [v]
+    | isDisjunct v = let (q:p:_) = v in case m of -- TODO remove the accent: `aì` becomes `ahi` not `ahì`
+        "" -> [v]
+        "h" -> [[q]++m++[p]]
+        "y" -> [[q]++m++[p]]
+        "w" -> [[q]++m++[p]]
+        "’" -> [[q]++m++[p]]
+        "’h" -> [[q]++m++[p]]
+        "’y" -> [[q]++m++[p]]
+        "’w" -> [[q]++m++[p]]
+        _ -> [v]
+    | otherwise = error ("unknown insert: " ++ m ++ ", " ++ v)
+
+parser__inserting__into__ :: String -> [String] -> [String] -> ParserTree
+parser__inserting__into__ name mods vals = parser__from_values__ name . concat $ [ insert mod val | mod <- mods, val <- vals ]
+
+
+
+-- vr_ins = setk "V*" <$> do
+--     _vr <- vr
+--     case _vr of
+--         P k _vr -> if length _vr == 2
+--                  then modifyState ((P k [_vr!!1]):)
+--                  else modifyState ((P k _vr):)
+--         _ -> parserZero
+
+--     _cd <- try glottal_wy <|> try wy <|> glottal
+
+--     if _cd `eqv` (N "’")
+--         then return _cd
+--         else do
+--             _v <- try vowel
+--             state <- getState
+--             case kvLookup1 "Vr" state of
+--                 [] -> unexpected "error: expected a V* slot, must appear after a Vr slot"
+--                 (res:_) -> if res `eqv` _v
+--                  then return (concaTrees [_vr, _cd, _v])
+--                  else unexpected "error: V* does not match Vr2."
+
+vr :: ParserTree
+vr = parser_from_slot__ "Vr"
+
+vr_ins :: ParserTree
+vr_ins = parser__inserting__into__ "Vr" ["’", "y", "w", "’y", "’w"] (values_of_slot__ "Vr")
 
 initial_cr_raw :: ParserTree
-initial_cr_raw =  try polyconsonantal <|> monoconsonantal
+initial_cr_raw =  try triconsonantal <|> try biconsonantal <|> monoconsonantal
 
 mid_cr_raw :: ParserTree
-mid_cr_raw = (many1Trees consonant)
+mid_cr_raw = initial_cr_raw
 
 -- raw: used for the phonology or the phonotactics,
--- without raw, used for the morpho-phonology
+-- without raw: used for the morpho-phonology
 
 mid_cr :: ParserTree
 mid_cr = (concaTree (P "Cr" "")) <$> mid_cr_raw
@@ -192,102 +339,157 @@ mid_cr = (concaTree (P "Cr" "")) <$> mid_cr_raw
 initial_cr :: ParserTree
 initial_cr = (concaTree (P "Cr" "")) <$> initial_cr_raw
 
-vr_stateless :: ParserTree
-vr_stateless = fromVal "Vr"
+vi :: ParserTree
+vi = parser__inserting__into__ "Vi" ["", "’", "h", "’h"] (values_of_slot__ "Vr")
 
-vr :: ParserTree
-vr = do
-    v <- vr_stateless
-    case v of
-        P k v -> if length v == 2
-                 then modifyState ((P k [v!!1]):)
-                 else modifyState ((P k v):)
-        _ -> return ()
-    return v
+vf :: ParserTree
+vf = parser__inserting__into__ "Vf" ["", "w", "y"] (values_of_slot__ "Vc")
 
-vstar :: ParserTree
-vstar = setk "V*" <$> do
-    cd <- try glottal_wy <|> try wy <|> glottal
-    if cd `eqv` (N "’")
-        then return cd
-        else do
-            v <- try vowel
-            state <- getState
-            case kvLookup1 "Vr" state of
-                [] -> unexpected "error: expected a V* slot, must appear after a Vr slot"
-                (res:_) -> if res `eqv` v
-                 then return (concaTree cd v)
-                 else unexpected "error: V* does not match Vr2."
-
-cd :: ParserTree
-cd = fromVal "Cd"
-
-ca :: ParserTree
-ca = fromVal "Ca"
-
-vx :: ParserTree
-vx = fromVal "Vx"
+ci :: ParserTree
+ci = setk "Ci" <$> mid_cr
 
 cs :: ParserTree
 cs = (concaTree (P "Cs" "")) <$> mid_cr_raw
 
+vx :: ParserTree
+vx = parser_from_slot__ "Vx"
+
+cd :: ParserTree
+cd = parser_from_slot__ "Cd"
+
+ca :: ParserTree
+ca = parser_from_slot__ "Ca"
+
 vn :: ParserTree
-vn = fromVal "Vn"
+vn = parser_from_slot__ "Vn"
 
 vm1 :: ParserTree
-vm1 = fromVal "Vm1"
+vm1 = parser_from_slot__ "Vm1"
 
 vt1 :: ParserTree
-vt1 = fromVal "Vt1"
+vt1 = parser_from_slot__ "Vt1"
 
 vp :: ParserTree
-vp = fromVal "Vp"
+vp = parser_from_slot__ "Vp"
 
 vl :: ParserTree
-vl = fromVal "Vl"
+vl = parser_from_slot__ "Vl"
 
 ve :: ParserTree
-ve = fromVal "Ve"
+ve = parser_from_slot__ "Ve"
 
 vm2 :: ParserTree
-vm2 = fromVal "Vm2"
+vm2 = parser_from_slot__ "Vm2"
 
 vt2 :: ParserTree
-vt2 = fromVal "Vt2"
+vt2 = parser_from_slot__ "Vt2"
 
 cc :: ParserTree
-cc = fromVal "Cc"
+cc = parser_from_slot__ "Cc"
 
 cm :: ParserTree
-cm = fromVal "Cm"
+cm = parser_from_slot__ "Cm"
 
 vc :: ParserTree
-vc = fromVal "Vc"
+vc = parser_from_slot__ "Vc"
 
 vk :: ParserTree
-vk = fromVal "Vk"
+vk = parser_from_slot__ "Vk"
 
 cb :: ParserTree
 cb = (concaTree (P "Cb" "")) <$> glottal >< initial_cr_raw
 
+
+
+
+
+
+
+vcORvk = do
+-- TODO: check for stress later, remove state
+-- TODO: In order to make this function correct, the state has to be modified when stress is encountered in the formative. An easy way of doing so is checking for stress diacritic at every vowel conjuncts, but that's not pretty.
+-- The only "problematic" Vc/Vk values are Cases 1-36 for pre-ante, ante and penultimate stress, the others can solely be determined by their shapes (hence the various test "v `elem` values_of_slot__").
+    ck <- parser__from_values__ "Vc/Vk" $ values_of_slot__("Vc") ++ values_of_slot__("Vk")
+    let v = valOf ck
+    if v `elem` values_of_slot__("Vc")
+    then
+        if v `elem` values_of_slot__("Vk")
+        then
+            (do
+        state <- getState
+        case kvLookup1 "Stress" state of
+            [] -> return ck
+            (res:_) -> (case valOf res of
+                    "pre-antepenultimate" -> return $ setk "Vk" ck
+                    "antepenultimate" -> return $ setk "Vk" ck
+                    "penultimate" -> return $ setk "Vc" ck
+                    "ultimate" -> return $ setk "Vc" ck
+                    _ -> return ck)
+            )
+        else return $ setk "Vc" ck
+    else
+        if v `elem` values_of_slot__("Vk")
+        then return $ setk "Vk" ck
+        else return $ ck -- this else branch is impossible, by definition of ck
+
+
+vt1noXI = parser_from_slot__ "Vt1noXI"
+
+_X_XII = try (vn >< h >< (try cm <|> cc)) <|> ((try vt1noXI <|> vm1) >< (try cm <|> cc))
+
+_X_XI_XII = do
+    _x <- (try vn <|> try vt1 <|> vm1)
+    _xi <- case (run vowel [last $ valOf _x]) of
+        Left e -> (try vp <|> try vl <|> try ve <|> try vm2 <|> vt2) -- slot X ends with ’ or h
+        Right i -> try vp <|> try vl <|> try ve <|> try (glottal >< vm2) <|> (glottal >< vt2) -- slot X ends in a vowel
+    _xii <- try cm <|> cc
+    return $ concaTrees [_x, _xi, _xii]
+
+_X_XI_XII_XIII =
+    (try (_X_XI_XII) <|> ((_X_XII) ? zeroTree))
+    >< vcORvk
+
 -- | parse slots VII to XIV
 formativeTail = setk "formativeTail" <$>
     ((many1Trees (cs >< vx)) >< glottal) ? zeroTree
-    >< ca
-    >< (manyTryTrees (vx >< cs))
     ><
-    ((
-        ((vn <|> vm1 <|> vt1) ? zeroTree)
-        >< ((vp <|> vl <|> ve <|> vm2 <|> vt2) ? zeroTree)
-        >< (cc <|> cm)
-    ) ? zeroTree)
-    -- >< (vc <|> vk)
-    -- >< (cb ? zeroTree)
+        (<|>)
+            (
+                try (
+                    ca >< manyTryTrees (vx >< cs) (_X_XI_XII_XIII)
+                )
+            )
+            (
+                (
+                    (><)
+                        (
+                            try ca <|> (h >< (try cm <|> cc))
+                        )
+                        (
+                            (
+                                manyTryTrees (vx >< cs) vcORvk
+                            )
+                        )
+                )
+            )
+    >< (cb ? zeroTree)
+
+
+
+
 
 simpleFormative = setk "simpleFormative" <$>
-    (try (cd >< vr >< mid_cr >< ë) <|> (initial_cr >< vr >< vstar))
+    (try (cd >< vr >< mid_cr >< ë) <|> (initial_cr >< vr_ins))
 
 complexFormative = setk "complexFormative" <$>
-    simpleFormative
+    cd >< vr >< mid_cr >< vi >< ci >< vf
 
-root = simpleFormative <|> complexFormative
+-- TODO: remove state
+word = do
+    parse <- (simpleFormative <|> complexFormative)
+    putState defaultStateForTNIL -- reset the state at each word (important for stress)
+    return parse
+
+sentence = L "sentence" <$> (spaces *> sepEndBy1 word spaces)
+
+root = sentence

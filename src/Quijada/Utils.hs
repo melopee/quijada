@@ -32,9 +32,9 @@ import Data.List
 -- ]
 
 instance Show Tree where
-    show (N s) = prettyShow s
+    show (N s) = "(" ++ prettyShow s ++ ")"
     show (P s a) = "(" ++ prettyShow s ++ ": " ++ prettyShow a ++ ")"
-    show (L s aa) = "(" ++ prettyShow s ++ ": " ++ (intercalate ", " . map prettyShow $ aa) ++ ")"
+    show (L s aa) = "(" ++ prettyShow s ++ ": " ++ (intercalate " " . map prettyShow $ aa) ++ ")"
 
 zeroTree = N ""
 
@@ -62,6 +62,10 @@ concaTree (L k v) (N b) = if b /= "" then L k (v++[(N b)]) else L k v
 concaTree (L k v) b@(P _ _) = L k (v++[b])
 concaTree (L ka va) (L kb vb) = L (ka ++ kb) (va ++ vb)
 
+valOf (N v) = v
+valOf (P _ v) = v
+valOf (L _ _) = ""
+
 concaTrees :: [Tree] -> Tree
 concaTrees = foldl (concaTree) zeroTree
 
@@ -79,22 +83,24 @@ many1Trees parser = concaTrees <$> many1 parser
 manyTrees :: ParserTree -> ParserTree
 manyTrees parser = concaTrees <$> many parser
 
-manyTryTrees :: ParserTree -> ParserTree
-manyTryTrees parser = do
-    t <- try parser
-    case t of
-        Left e -> return zeroTree
-        Right i -> (concaTree i) <$> manyTryTrees parser
+manyTillTrees :: ParserTree -> ParserTree -> ParserTree
+manyTillTrees parser end = concaTrees <$> manyTill parser end
+
+manyTryTrees :: ParserTree -> ParserTree -> ParserTree
+manyTryTrees parser end = try (parser >< manyTryTrees parser end) <|> end
 
 -- ## functions generating parsers based on morpho-phonological values
 
+makeLongestFirst :: [[a]] -> [[a]]
 makeLongestFirst = reverse . sortBy (\x y -> compare (length x) (length y))
 
-valueFrom v l = aux v (makeLongestFirst l) where
+parser__from_values__ v l = aux v (makeLongestFirst l) where
     aux _ [] = parserZero
     aux v (x:xs) = (try (P v <$> string x)) <|> (aux v xs)
 
-fromVal v = valueFrom v $ vLeaves . head . kvLookup1 v $ values
+values_of_slot__ slot = (vLeaves . head . kvLookup1 slot $ values)
+
+parser_from_slot__ v = parser__from_values__ v $ values_of_slot__ v
 
 
 -- ## useful and unrelated functions
@@ -118,15 +124,18 @@ prettyShow x = con (show x) where
 
 prettyState r = case r of
     Left e -> prettyShow e
-    Right (parse,state) -> ("parse: " ++ prettyShow parse) ++ "\n" ++ ("state: " ++ prettyShow state)
+    Right (parse,state) -> ("parse: " ++ prettyShow parse) ++ "\n" ++ ("last state: " ++ prettyShow state)
 
-prettyNotState r = case r of
+prettyNoState r = case r of
     Left e -> prettyShow e
     Right i -> prettyShow i
 
 
+defaultStateForTNIL = [P "Stress" "penultimate"]
+
 
 appendStateTo parser = parser >>= (\parse -> (getState >>= (\state -> return (parse, state))))
+
 
 run parser = runParser (parser <* eof) [] ""
 
@@ -139,9 +148,9 @@ runWS state parser = runParser (appendStateTo parser <* eof) state ""
 -- W: a state can be precised with the argument "state"
 -- S: modify the "parser" arg so that the state is appended
 
-rr parser s = prettyNotState (run parser s)
+rr parser s = prettyNoState (run parser s)
 
-rrW state parser s = prettyNotState (runW state parser s)
+rrW state parser s = prettyNoState (runW state parser s)
 
 rrS parser s = prettyState (runS parser s)
 

@@ -12,7 +12,7 @@ if [ -e "$src" ]; then
         "$trg" &&
     perl -i -p -e 'print "module Quijada.Values where
 
-data Tree = N String | P String String | L String [Tree] deriving (Show, Eq)
+data Tree = N String | P String String | L String [Tree] deriving (Eq)
 
 values = " if $. == 1' "$trg";
     # perl -i -p -e 's/KL "Cd"/KLL "Cd"/g' "$trg" &&

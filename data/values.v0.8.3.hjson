@@ -1,5 +1,7 @@
 {
     Cd: {
+        debug: Cd
+
         "INC:∅": {
             MAIN: {
                 INF-PRC: ’
@@ -43,6 +45,8 @@
     }
 
     Vr: {
+        # debug: Vr
+
         "STEM:0": {
             STA: {
                 BSC: aì
@@ -125,6 +129,8 @@
     }
 
     Vx: {
+        debug: Vx
+
         "TYPE:1": {
             0: ae
             1: a
@@ -198,6 +204,8 @@
     }
 
     Ca: {
+        debug: Ca
+
         AFFILIATION: {
             CSL: [
                 ∅
@@ -290,10 +298,9 @@
     }
 
     Vn: {
-        MNO: [
-            ∅
-            A
-        ]
+        debug: Vn
+
+        MNO: a
         PRL: e
         CRO: o
         RCP: u
@@ -308,6 +315,8 @@
     }
 
     Vp: {
+        debug: Vp
+
         CTX: wai
         PCT: wei
         ITR: woi
@@ -320,7 +329,9 @@
     }
 
     Ve: {
-        neutral: ∅
+        debug: Ve
+
+        # neutral: ∅
         1/BEN: yai
         2/BEN: yei
         3/BEN: yoi
@@ -334,7 +345,9 @@
 
     Vl: {
         relative: {
-            none: ∅
+            debug: Vl
+
+            # ∅: ∅
             MIN: wao
             IFR: wea
             SBE: woa
@@ -346,7 +359,9 @@
             MAX: waö
         }
         absolute: {
-            none: ∅
+            debug: Vl
+
+            # ∅: ∅
             MIN: yao
             IFR: yea
             SBE: yoa
@@ -360,7 +375,9 @@
     }
 
     Vm1: {
-        null: ∅
+        debug: Vm1
+
+        # ∅: ∅
         FAC: a’
         SUB: e’
         ASM: i’
@@ -370,10 +387,13 @@
     }
 
     Vm2: {
-        null: [
-            ∅
-            ë
-        ]
+        debug: Vm2
+
+        # ∅: [
+        #     ∅
+        #     ë
+        # ]
+        ∅: ë
         FAC: a
         SUB: e
         ASM: i
@@ -383,7 +403,9 @@
     }
 
     Cm: {
-        null: ∅
+        debug: Cm
+
+        # ∅: ∅
         FAC: h
         SUB: hl
         ASM: kn
@@ -393,6 +415,8 @@
     }
 
     Vt1: {
+        debug: Vt1
+
         RTR: ai
         PRS: ei
         HAB: oi
@@ -434,7 +458,53 @@
         LIM: ä’h
     }
 
+    Vt1noXI: {
+        debug: Vt1noXI
+
+        RTR: ai’
+        PRS: ei’
+        HAB: oi’
+        PRG: ui’
+        IMM: ëi’
+        PCS: iu’
+        REG: ou’
+        ATC: eu’
+        ATP: au’
+
+        RSM: ahë
+        CSS: ehë
+        PAU: ohë
+        RGR: uhë
+        PCL: ihë
+        CNT: ühë
+        ICS: öhë
+        SMM: ëhë
+        IRP: ähë
+
+        PMP: aih
+        CLM: eih
+        DLT: oih
+        TMP: uih
+        MTV: ëih
+        SQN: iuh
+        EPD: ouh
+        PTC: euh
+        PPR: auh
+
+        DCL: a’hë
+        CCL: e’hë
+        CUL: o’hë
+        IMD: u’hë
+        TRD: i’hë
+        TNS: ü’hë
+        ITC: ö’hë
+        XPD: ë’hë
+        LIM: ä’hë
+    }
+
     Vt2: {
+        debug: Vt2
+
         RTR: wa
         PRS: we
         HAB: wo
@@ -476,6 +546,8 @@
         LIM: aö
     }
     Cc: {
+        debug: Cc
+
         CCO: r
         CCw: [
             w
@@ -492,6 +564,8 @@
     }
 
     Vc: {
+        # debug: Vc
+
         TRANSRELATIVE: {
             THM: a
             ABS: e
@@ -630,6 +704,8 @@
     }
 
     Vk: {
+        debug: Vk
+
         CNF: {
             PPS: {
                 antepenultimate: a
@@ -1011,6 +1087,8 @@
    }
 
     "Register Adjunct": {
+        debug: RA
+
         DISCURSIVE: {
             open: hya
             end: hyia
@@ -1042,6 +1120,8 @@
     }
 
     "Personal Reference Adjunct": {
+        debug: PRA
+
         1m: {
             description: monadic speaker
             NEU: l
@@ -1136,6 +1216,8 @@
     }
 
     "Parsing Adjunct": {
+        debug: PA
+
         monosyllabic: ’a’
         ultimate: ’e’
         penultimate: ’o’

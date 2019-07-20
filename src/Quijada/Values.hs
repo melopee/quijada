@@ -4,6 +4,7 @@ data Tree = N String | P String String | L String [Tree] deriving (Eq)
 
 values = [
   L "Cd" [
+    P "debug" "Cd",
     L "INC:∅" [
       L "MAIN" [
         P "INF-PRC" "’",
@@ -127,6 +128,7 @@ values = [
     ]
   ],
   L "Vx" [
+    P "debug" "Vx",
     L "TYPE:1" [
       P "0" "ae",
       P "1" "a",
@@ -199,6 +201,7 @@ values = [
     ]
   ],
   L "Ca" [
+    P "debug" "Ca",
     L "AFFILIATION" [
       L "CSL" [
         N "∅",
@@ -290,10 +293,8 @@ values = [
     ]
   ],
   L "Vn" [
-    L "MNO" [
-      N "∅",
-      N "A"
-    ],
+    P "debug" "Vn",
+    P "MNO" "a",
     P "PRL" "e",
     P "CRO" "o",
     P "RCP" "u",
@@ -307,6 +308,7 @@ values = [
     P "MUT" "oa"
   ],
   L "Vp" [
+    P "debug" "Vp",
     P "CTX" "wai",
     P "PCT" "wei",
     P "ITR" "woi",
@@ -318,7 +320,7 @@ values = [
     P "FLC" "wau"
   ],
   L "Ve" [
-    P "neutral" "∅",
+    P "debug" "Ve",
     P "1/BEN" "yai",
     P "2/BEN" "yei",
     P "3/BEN" "yoi",
@@ -331,7 +333,7 @@ values = [
   ],
   L "Vl" [
     L "relative" [
-      P "none" "∅",
+      P "debug" "Vl",
       P "MIN" "wao",
       P "IFR" "wea",
       P "SBE" "woa",
@@ -343,7 +345,7 @@ values = [
       P "MAX" "waö"
     ],
     L "absolute" [
-      P "none" "∅",
+      P "debug" "Vl",
       P "MIN" "yao",
       P "IFR" "yea",
       P "SBE" "yoa",
@@ -356,7 +358,7 @@ values = [
     ]
   ],
   L "Vm1" [
-    P "null" "∅",
+    P "debug" "Vm1",
     P "FAC" "a’",
     P "SUB" "e’",
     P "ASM" "i’",
@@ -365,10 +367,8 @@ values = [
     P "HYP" "ö’"
   ],
   L "Vm2" [
-    L "null" [
-      N "∅",
-      N "ë"
-    ],
+    P "debug" "Vm2",
+    P "∅" "ë",
     P "FAC" "a",
     P "SUB" "e",
     P "ASM" "i",
@@ -377,7 +377,7 @@ values = [
     P "HYP" "ö"
   ],
   L "Cm" [
-    P "null" "∅",
+    P "debug" "Cm",
     P "FAC" "h",
     P "SUB" "hl",
     P "ASM" "kn",
@@ -386,6 +386,7 @@ values = [
     P "HYP" "ty"
   ],
   L "Vt1" [
+    P "debug" "Vt1",
     P "RTR" "ai",
     P "PRS" "ei",
     P "HAB" "oi",
@@ -423,7 +424,47 @@ values = [
     P "XPD" "ë’h",
     P "LIM" "ä’h"
   ],
+  L "Vt1noXI" [
+    P "debug" "Vt1noXI",
+    P "RTR" "ai’",
+    P "PRS" "ei’",
+    P "HAB" "oi’",
+    P "PRG" "ui’",
+    P "IMM" "ëi’",
+    P "PCS" "iu’",
+    P "REG" "ou’",
+    P "ATC" "eu’",
+    P "ATP" "au’",
+    P "RSM" "ahë",
+    P "CSS" "ehë",
+    P "PAU" "ohë",
+    P "RGR" "uhë",
+    P "PCL" "ihë",
+    P "CNT" "ühë",
+    P "ICS" "öhë",
+    P "SMM" "ëhë",
+    P "IRP" "ähë",
+    P "PMP" "aih",
+    P "CLM" "eih",
+    P "DLT" "oih",
+    P "TMP" "uih",
+    P "MTV" "ëih",
+    P "SQN" "iuh",
+    P "EPD" "ouh",
+    P "PTC" "euh",
+    P "PPR" "auh",
+    P "DCL" "a’hë",
+    P "CCL" "e’hë",
+    P "CUL" "o’hë",
+    P "IMD" "u’hë",
+    P "TRD" "i’hë",
+    P "TNS" "ü’hë",
+    P "ITC" "ö’hë",
+    P "XPD" "ë’hë",
+    P "LIM" "ä’hë"
+  ],
   L "Vt2" [
+    P "debug" "Vt2",
     P "RTR" "wa",
     P "PRS" "we",
     P "HAB" "wo",
@@ -462,6 +503,7 @@ values = [
     P "LIM" "aö"
   ],
   L "Cc" [
+    P "debug" "Cc",
     P "CCO" "r",
     L "CCw" [
       N "w",
@@ -614,6 +656,7 @@ values = [
     ]
   ],
   L "Vk" [
+    P "debug" "Vk",
     L "CNF" [
       L "PPS" [
         P "antepenultimate" "a"
@@ -994,6 +1037,7 @@ values = [
     ]
   ],
   L "Register Adjunct" [
+    P "debug" "RA",
     L "DISCURSIVE" [
       P "open" "hya",
       P "end" "hyia"
@@ -1024,6 +1068,7 @@ values = [
     ]
   ],
   L "Personal Reference Adjunct" [
+    P "debug" "PRA",
     L "1m" [
       P "description" "monadic speaker",
       P "NEU" "l",
@@ -1117,6 +1162,7 @@ values = [
     ]
   ],
   L "Parsing Adjunct" [
+    P "debug" "PA",
     P "monosyllabic" "’a’",
     P "ultimate" "’e’",
     P "penultimate" "’o’",
