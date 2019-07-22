@@ -107,9 +107,28 @@ parser_from_slot__ v = parser__from_values__ v $ values_of_slot__ v
 infixl 3 ?
 (?) b a = option a b
 
+infixr 1 <||>
+(<||>) :: ParsecT s u m a -> ParsecT s u m a -> ParsecT s u m a 
+a <||> b = (try a) <|> b
+
+tryThemAll [] = parserZero
+tryThemAll (p:ps) = p <||> (tryThemAll ps)
+
+
 no :: (Stream s m t, Show a) => ParsecT s u m a -> ParsecT s u m ()
 no = notFollowedBy
 
+
+for = flip (map)
+
+
+desaccentify c
+    | c `elem` "äàáâ" = 'a'
+    | c `elem` "ëèéê" = 'e'
+    | c `elem` "öòóô" = 'o'
+    | c `elem` "üùúû" = 'u'
+    | c `elem` "ìíî" = 'i'
+    | otherwise = c
 
 
 prettyShow :: Show a => a -> String

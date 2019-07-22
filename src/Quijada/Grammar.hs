@@ -1,3 +1,5 @@
+{-# LANGUAGE TupleSections #-}
+
 module Quijada.Grammar where
 
 import Quijada.Utils
@@ -233,67 +235,6 @@ triconsonantal =
 
 
 
-isSingle v = case (run vowel v) of
-    Left _ -> False
-    Right _ -> True
-
-isIDiphthong v = case (run iDiphthong v) of
-    Left _ -> False
-    Right _ -> True
-
-isUDiphthong v = case (run uDiphthong v) of
-    Left _ -> False
-    Right _ -> True
-
-isDisjunct v = case (run disjunct v) of
-    Left _ -> False
-    Right _ -> True
-
-insert m v
-    | isSingle v = case m of
-        "" -> [v]
-        "h" -> [v++m++v, v++m]
-        "y" -> [v++m++v]
-        "w" -> [v++m++v]
-        "’" -> [v++m++v, v++m]
-        "’h" -> [v++m++v, v++m]
-        "’y" -> [v++m++v]
-        "’w" -> [v++m++v]
-        _ -> [v]
-    | isIDiphthong v = let (q:p:_) = v in case m of
-        "" -> [v]
-        "h" -> [v++m++[q], v++m]
-        "y" -> [[q]++m++[p]]
-        "w" -> [v++m++[q]]
-        "’" -> [v++m++[q], v++m]
-        "’h" -> [v++m++[q], v++m]
-        "’y" -> [[q]++m++[p]]
-        "’w" -> [v++m++[q]]
-        _ -> [v]
-    | isUDiphthong v = let (q:p:_) = v in case m of
-        "" -> [v]
-        "h" -> [v++m++[q], v++m]
-        "y" -> [v++m++[q]]
-        "w" -> [[q]++m++[p]]
-        "’" -> [v++m++[q], v++m]
-        "’h" -> [v++m++[q], v++m]
-        "’y" -> [v++m++[q]]
-        "’w" -> [[q]++m++[p]]
-        _ -> [v]
-    | isDisjunct v = let (q:p:_) = v in case m of -- TODO remove the accent: `aì` becomes `ahi` not `ahì`
-        "" -> [v]
-        "h" -> [[q]++m++[p]]
-        "y" -> [[q]++m++[p]]
-        "w" -> [[q]++m++[p]]
-        "’" -> [[q]++m++[p]]
-        "’h" -> [[q]++m++[p]]
-        "’y" -> [[q]++m++[p]]
-        "’w" -> [[q]++m++[p]]
-        _ -> [v]
-    | otherwise = error ("unknown insert: " ++ m ++ ", " ++ v)
-
-parser__inserting__into__ :: String -> [String] -> [String] -> ParserTree
-parser__inserting__into__ name mods vals = parser__from_values__ name . concat $ [ insert mod val | mod <- mods, val <- vals ]
 
 
 
@@ -317,6 +258,64 @@ parser__inserting__into__ name mods vals = parser__from_values__ name . concat $
 --                 (res:_) -> if res `eqv` _v
 --                  then return (concaTrees [_vr, _cd, _v])
 --                  else unexpected "error: V* does not match Vr2."
+
+
+
+isSingle v = case (run vowel v) of
+    Left _ -> False
+    Right _ -> True
+
+isIDiphthong v = case (run iDiphthong v) of
+    Left _ -> False
+    Right _ -> True
+
+isUDiphthong v = case (run uDiphthong v) of
+    Left _ -> False
+    Right _ -> True
+
+isDiphthong v = isIDiphthong v || isUDiphthong v
+
+isDisjunct v = case (run disjunct v) of
+    Left _ -> False
+    Right _ -> True
+
+
+
+
+extract m v =
+    if
+        ( (isDisjunct v && m /= "") || (isIDiphthong v && (m == "y" || m == "’y")) || (isUDiphthong v && (m == "w" || m == "’w")) )
+    then
+        [([v!!0], [desaccentify $ v!!1])]
+    else
+        map (v,) (if m == "" then
+                [""]
+            else if m == "h" || m == "’" || m == "’h" then
+                (if isDiphthong v then
+                        [[v!!0], ""]
+                    else -- so v is a sinle vowel
+                        [v, ""]
+                )
+            else (if isDiphthong v then
+                    [[v!!0]]
+                else -- so v is a sinle vowel
+                    [v]
+            )
+        )
+
+insert :: String -> String -> String -> [ParserTree]
+insert name m v = for (extract m v) (\(first, second) -> do
+    _first <- N <$> string first
+    _sep <- N <$> string m
+    _second <- N <$> (string second) <?> "insert error"
+    return (concaTrees [_first, _sep, _second])
+    )
+
+--| TODO: this function never report the insert error as it generates all the parser *then* try them all one by one
+-- instead, the first part (e.g. Vr1) should be tried for all vals; when a correct one is found, it should be accepted, *then* Vr2 should be tried and if it does not match Vr1, here goes the insert error
+parser__inserting__into__ :: String -> [String] -> [String] -> ParserTree
+parser__inserting__into__ name mods vals = setk name <$> (tryThemAll . concat $ [ insert name mod val | mod <- mods, val <- vals ])
+
 
 vr :: ParserTree
 vr = parser_from_slot__ "Vr"
