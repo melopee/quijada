@@ -1,0 +1,680 @@
+{
+    Cd: {
+        debug: Cd
+
+        Type1: {
+            IFL: {
+                PRC: h 
+                CPT: hw
+                PRC-alt: hlw
+                CPT-alt: hmw
+            }
+            FML: {
+                PRC: ç
+                CPT: çw
+                PRC-alt: hly
+                CPT-alt: hnw
+            }
+        }
+        Type2: {
+            IFL: {
+                PRC: w
+                CPT: hl
+                PRC-alt: hm
+                CPT-alt: hmy
+            }
+            FML: {
+                PRC: y
+                CPT: hr
+                PRC-alt: hn
+                CPT-alt: hny
+            }
+        }
+    }
+
+    Vv: {
+        "Stem:1": {
+            IFL: {
+                PRC: {
+                    UFR: a
+                    FRA: ä
+                }
+                CPT: {
+                    UFR: e
+                    FRA: i
+                }
+            }
+            FML: {
+                PRC: {
+                    UFR: u
+                    FRA: ü
+                }
+                CPT: {
+                    UFR: o
+                    FRA: ö
+                }
+            }
+        }
+
+        "Stem:2": {
+            IFL: {
+                PRC: {
+                    UFR: ai
+                    FRA: au
+                }
+                CPT: {
+                    UFR: ei
+                    FRA: eu
+                }
+            }
+            FML: {
+                PRC: {
+                    UFR: ui
+                    FRA: iu
+                }
+                CPT: {
+                    UFR: oi
+                    FRA: ou
+                }
+            }
+        }
+
+        "Stem:3": {
+            IFL: {
+                PRC: {
+                    UFR: ["ia", "oä"]
+                    FRA: ["iä", "uä"]
+                }
+                CPT: {
+                    UFR: ["ie", "oë"]
+                    FRA: ["ië", "uë"]
+                }
+            }
+            FML: {
+                PRC: {
+                    UFR: ["ua", "aö"]
+                    FRA: ["ue", "eö"]
+                }
+                CPT: {
+                    UFR: ["uo", "io"]
+                    FAA: ["uö", "iö"]
+                }
+            }
+        }
+
+        "Stem:0": {
+            IFL: {
+                PRC: {
+                    UFR: ao
+                    FRA: ao
+                }
+                CPT: {
+                    UFR: ea
+                    FRA: eo
+                }
+            }
+            FML: {
+                PRC: {
+                    UFR: oa
+                    FRA: öa
+                }
+                CPT: {
+                    UFR: oe
+                    FRA: öe
+                }
+            }
+        }
+    }
+
+    Vr: {
+        "Stem:1": {
+            IFL: {
+                PRC: {
+                    UFR: a
+                    FRA: ä
+                }
+                CPT: {
+                    UFR: e
+                    FRA: i
+                }
+            }
+            FML: {
+                PRC: {
+                    UFR: u
+                    FRA: ü
+                }
+                CPT: {
+                    UFR: o
+                    FRA: ö
+                }
+            }
+        }
+
+        "Stem:2": {
+            IFL: {
+                PRC: {
+                    UFR: ai
+                    FRA: au
+                }
+                CPT: {
+                    UFR: ei
+                    FRA: eu
+                }
+            }
+            FML: {
+                PRC: {
+                    UFR: ui
+                    FRA: iu
+                }
+                CPT: {
+                    UFR: oi
+                    FRA: ou
+                }
+            }
+        }
+
+        "Stem:3": {
+            IFL: {
+                PRC: {
+                    UFR: ["ia", "oä"]
+                    FRA: ["iä", "uä"]
+                }
+                CPT: {
+                    UFR: ["ie", "oë"]
+                    FRA: ["ië", "uë"]
+                }
+            }
+            FML: {
+                PRC: {
+                    UFR: ["ua", "aö"]
+                    FRA: ["ue", "eö"]
+                }
+                CPT: {
+                    UFR: ["uo", "io"]
+                    FAA: ["uö", "iö"]
+                }
+            }
+        }
+
+        "Stem:0": {
+            IFL: {
+                PRC: {
+                    UFR: ao
+                    FRA: ao
+                }
+                CPT: {
+                    UFR: ea
+                    FRA: eo
+                }
+            }
+            FML: {
+                PRC: {
+                    UFR: oa
+                    FRA: öa
+                }
+                CPT: {
+                    UFR: oe
+                    FRA: öe
+                }
+            }
+        }
+    }
+
+
+    Vx: {
+        "Type:1": {
+                1: a
+                2: ä
+                3: e
+                4: ë
+                5: i
+                6: u
+                7: ü
+                8: o
+                9: ö
+                0: üa
+        }
+
+        "Type:2": {
+                1: ai
+                2: au
+                3: ei
+                4: eu
+                5: ëi
+                6: ui
+                7: iu
+                8: oi
+                9: ou
+                0: üe
+        }
+
+        "Type:3": {
+                1: ["ia", "oä"]
+                2: ["iä", "uä"]
+                3: ["ie", "oë"]
+                4: ["ië", "uë"]
+                5: ëu 
+                6: ["ua", "aö"]
+                7: ["ue", "eö"]
+                8: ["uo", "io"]
+                9: ["uö", "iö"]
+                0: üo
+        }
+
+        "Type:1 Delineated": {
+                1: ao
+                2: ao
+                3: ea
+                4: eo
+                5: eë
+                6: oa
+                7: öa
+                8: oe
+                9: öe
+                0: üö
+        }
+
+        "Type:2 Delineated": {
+                1: ayo
+                2: ayo
+                3: eya
+                4: eyo
+                5: eyë
+                6: oya
+                7: öya
+                8: oye
+                9: öye
+                0: üyö
+        }
+
+        "Ca Stacking": {
+            MAIN: uä
+            INC: uë
+        }
+    }
+
+    # Ca: {
+    #     debug: Ca
+
+    #     AFFILIATION: {
+    #         CSL: [
+    #             ∅
+    #             l
+    #         ]
+    #         ASO: [
+    #             tļ
+    #             l-
+    #         ]
+    #         VAR: r
+    #         COA: ř
+    #     }
+    #     CONFIGURATION: {
+    #         UNI: ∅
+    #         DPX: [
+    #             ň
+    #             nt
+    #         ]
+    #         DCT: [
+    #             f
+    #             v
+    #         ]
+    #         AGG: [
+    #             ţ
+    #             ḑ
+    #         ]
+    #         SEG: m
+    #         CPN: [
+    #             n
+    #             nk
+    #         ]
+    #         COH: [
+    #             t
+    #             d
+    #         ]
+    #         CST: [
+    #             k
+    #             g
+    #         ]
+    #         MLT: [
+    #             p
+    #             b
+    #         ]
+    #     }
+    #     EXTENSION: {
+    #         DEL: ∅
+    #         PRX: s
+    #         ICP: z
+    #         ATV: [
+    #             ţ
+    #             f
+    #         ]
+    #         GRA: š
+    #         DPL: ž
+    #     }
+    #     PERSPECTIVE: {
+    #         M: ∅
+    #         P: [
+    #             t
+    #             m
+    #         ]
+    #         N: [
+    #             k
+    #             m
+    #         ]
+    #         A: [
+    #             p
+    #             m
+    #         ]
+    #     }
+    #     ESSENCE: {
+    #         NRM: ∅
+    #         RPV: gemination
+    #     }
+    #     CONTEXT: {
+    #         EXS: ∅
+    #         FNC: [
+    #             l
+    #             ly
+    #         ]
+    #         RPS: [
+    #             r
+    #             ry
+    #         ]
+    #         AMG: [
+    #             w
+    #             řy
+    #         ]
+    #     }
+    # }
+
+
+
+
+    Vc: {
+        debug: Vc
+
+        TRANSRELATIVE: {
+            THM: a
+            ABS: e
+            ERG: o
+            IND: u
+            AFF: i
+            DAT: ü
+            EFF: ö
+            STM: ë
+            INS: ä
+        }
+        APPOSITIVE: {
+            POS: ai
+            PRP: ei
+            GEN: oi
+            ATT: ui
+            PDC: ëi
+            ITP: iu
+            OGN: ou
+            IDP: eu
+            PAR: au
+        }
+        ASSOCIATIVE: {
+            APL: [
+                ia
+                aì
+            ]
+            PUR: [
+                ie
+                eì
+            ]
+            TRA: [
+                io
+                oì
+            ]
+            DFR: [
+                iö
+                öì
+            ]
+            CRS: [
+                ië
+                ëì
+            ]
+            TSP: [
+                uö
+                öù
+            ]
+            CMM: [
+                uo
+                où
+            ]
+            CMP: [
+                ue
+                eù
+            ]
+            CSD: [
+                ua
+                aù
+            ]
+        }
+        ADVERBIAL: {
+            CON: ao
+            AVR: eo
+            CVS: oa
+            SIT: oe
+            FUN: ea
+            TFM: öe
+            CLA: öa
+            CSM: eö
+            RSL: aö
+        }
+        "SPATIO-TEMPORAL I": {
+            LOC: á
+            ATD: é
+            ALL: ó
+            ABL: ú
+            ORI: í
+            IRL: û
+            INV: ô
+            NAV: â
+        }
+        "SPATIO-TEMPORAL II": {
+            ASS: ái
+            CNR: éi
+            PER: ói
+            PRO: úi
+            PCV: íu
+            PCR: óu
+            ELP: éu
+            PLM: áu
+        }
+        "RELATIONAL I": {
+            REF: [
+                iá
+                aí
+            ]
+            COR: [
+                ié
+                eí
+            ]
+            CPS: [
+                ió
+                oí
+            ]
+            DEP: [
+                iô
+                öí
+            ]
+            PRD: [
+                uô
+                öú
+            ]
+            ESS: [
+                uó
+                oú
+            ]
+            ASI: [
+                ué
+                eú
+            ]
+            CFM: [
+                uá
+                aú
+            ]
+        }
+        "RELATIONAL II": {
+            ACT: aó
+            SEL: eó
+            COM: oá
+            UTL: oé
+            DSC: eá
+            RLT: ae
+            TRM: aé
+            VOC: ëu
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+    "Register Adjunct": {
+        debug: RA
+
+        DISCURSIVE: {
+            open: hya
+            end: hyia
+        }
+        PARENTHETICAL: {
+            open: hye
+            end: hyie
+        }
+        IMPRESSIONISTIC: {
+            open: hyai
+            end: hyau
+        }
+        COGITANT: {
+            open: hyo
+            end: hyio
+        }
+        EXEMPLIFICATIVE: {
+            open: hyö
+            end: hyiö
+        }
+        MATHS: {
+            open: hyoi
+            end: hyou
+        }
+        CARRIER: {
+            open: ∅
+            end: hyi
+        }
+    }
+
+    "Personal Reference Adjunct": {
+        debug: PRA
+
+        1m: {
+            description: monadic speaker
+            NEU: l
+            BEN: n
+            DET: m
+            gloss: “I”
+        }
+        2m: {
+            description: monadic addressee
+            NEU: s
+            BEN: š
+            DET: ž
+            gloss: “you (sg.)”
+        }
+        2p: {
+            description: polyadic addressee
+            NEU: z
+            BEN: t
+            DET: d
+            gloss: “you (pl.)”
+        }
+        ma: {
+            description: monadic animate 3rd party
+            NEU: r
+            BEN: p
+            DET: b
+            gloss: “he” / “she” / “they (sg.)”
+        }
+        pa: {
+            description: polyadic animate 3rd party
+            NEU: ň
+            BEN: k
+            DET: g
+            gloss: “they (pl.)”
+        }
+        mi: {
+            description: monadic inanimate 3rd party
+            NEU: x
+            BEN: ţ
+            DET: ḑ
+            gloss: “it”
+        }
+        pi: {
+            description: polyadic inanimate 3rd party
+            NEU: ļ
+            BEN: f
+            DET: v
+            gloss: “they (inanimate)”
+        }
+        Mx: {
+            description: mixed animate/inanimate 3rd party
+            NEU: ř
+            BEN: řř
+            DET: ňň
+            gloss: mixed animate+inanimate “s/he+it”, “they+those”, “it+they”, “those+s/he”, etc.
+        }
+        Obv: {
+            description: Obviative/Resumptive
+            NEU: c
+            BEN: ss
+            DET: zz
+            gloss: 3 rd -party other than most recently referenced (used with SWR affix)
+        }
+        IPa: {
+            description: impersonal animate
+            NEU: č
+            BEN: šš
+            DET: žž
+            gloss: “one” “you” “people” “a person” (French “on”; German “man”)
+        }
+        IPi: {
+            description: impersonal inanimate
+            NEU: ļ
+            BEN: ff
+            DET: vv
+            gloss: “something” “a thing” “things”
+        }
+        Col: {
+            description: Collective
+            NEU: ż
+            BEN: nn
+            DET: mm
+            gloss: NOMIC 3rd party
+        }
+        Abt: {
+            description: Abstract
+            NEU: j
+            BEN: rr
+            DET: xx
+            gloss: ABSTRACT 3rd party
+        }
+    }
+
+    "Parsing Adjunct": {
+        debug: PA
+
+        monosyllabic: ’a’
+        ultimate: ’e’
+        penultimate: ’o’
+        antepenultimate: ’u’
+        pre-antepenultimate: ’i’
+    }
+}
