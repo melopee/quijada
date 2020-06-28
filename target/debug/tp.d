@@ -1,1 +1,1 @@
-/home/darrljun/tp/target/debug/tp: /home/darrljun/tp/src/main.rs
+/home/darrljun/quijada/target/debug/tp: /home/darrljun/quijada/src/main.rs
