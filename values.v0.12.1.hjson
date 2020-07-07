@@ -1,33 +1,43 @@
 {
     Cd: {
-        debug: Cd
-
-        Type1: {
-            IFL: {
-                PRC: h 
-                CPT: hw
-                PRC-alt: hlw
-                CPT-alt: hmw
+        PRC: {
+            Type1: {
+                IFL: h
+                FML: ç
             }
-            FML: {
-                PRC: ç
-                CPT: çw
-                PRC-alt: hly
-                CPT-alt: hnw
+            Type2: {
+                IFL: w
+                FML: y
             }
         }
-        Type2: {
-            IFL: {
-                PRC: w
-                CPT: hl
-                PRC-alt: hm
-                CPT-alt: hmy
+        CPT: {
+            Type1: {
+                IFL: hw
+                FML: çw
             }
-            FML: {
-                PRC: y
-                CPT: hr
-                PRC-alt: hn
-                CPT-alt: hny
+            Type2: {
+                IFL: hl
+                FML: hr
+            }
+        }
+        PRC-alt: {
+            Type1: {
+                IFL: hlw
+                FML: hly
+            }
+            Type2: {
+                IFL: hm
+                FML: hn
+            }
+        }
+        CPT-alt: {
+            Type1: {
+                IFL: hmw
+                FML: hnw
+            }
+            Type2: {
+                IFL: hmy
+                FML: hny
             }
         }
     }
@@ -294,7 +304,6 @@
     }
 
     # Ca: {
-    #     debug: Ca
 
     #     AFFILIATION: {
     #         CSL: [
@@ -391,8 +400,6 @@
 
 
     Vc: {
-        debug: Vc
-
         TRANSRELATIVE: {
             THM: a
             ABS: e
@@ -540,8 +547,6 @@
 
 
     "Register Adjunct": {
-        debug: RA
-
         DISCURSIVE: {
             open: hya
             end: hyia
@@ -573,8 +578,6 @@
     }
 
     "Personal Reference Adjunct": {
-        debug: PRA
-
         1m: {
             description: monadic speaker
             NEU: l
@@ -669,8 +672,6 @@
     }
 
     "Parsing Adjunct": {
-        debug: PA
-
         monosyllabic: ’a’
         ultimate: ’e’
         penultimate: ’o’
