@@ -1,0 +1,36 @@
+use crate::ast::SynTree;
+use crate::ast::SynTree::*;
+
+grammar;
+
+// pub Text : SynTree = {
+//     <w:(<Sentence> ".")*> => L("Text".to_string(), w)
+// }
+
+pub Text = Sep<Sentence>; // (0)
+
+// Sep<T>: SynTree = { // (1)
+//     <v:(<T> ".")*> <e:T?> => match e { // (2)
+//         None => L("s".to_string(), v),
+//         Some(e) => {
+//             let mut v = v;
+//             v.push(e);
+//             L("s".to_string(), v)
+//         }
+//     }
+// };
+
+
+Sep<T> : SynTree = { // (1)
+    <v:(<T> ".")*>  => L("s".to_string(), v)
+};
+
+
+Sentence : SynTree = {
+    <w:(<Word>)*> => L("Sentence".to_string(), w)
+}
+
+
+Word: SynTree = r"[a-zA-Z]+" => N(<>.to_string());
+
+
